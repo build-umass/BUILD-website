@@ -3,7 +3,7 @@
 
 type AppRoutes = "/"
 type AppRouteHandlerRoutes = "/api/health"
-type PageRoutes = never
+type PageRoutes = "/" | "/_app" | "/about" | "/apply" | "/contact" | "/projects" | "/services"
 type LayoutRoutes = "/"
 type RedirectRoutes = never
 type RewriteRoutes = never
@@ -12,7 +12,13 @@ type Routes = AppRoutes | PageRoutes | LayoutRoutes | RedirectRoutes | RewriteRo
 
 interface ParamMap {
   "/": {}
+  "/_app": {}
+  "/about": {}
   "/api/health": {}
+  "/apply": {}
+  "/contact": {}
+  "/projects": {}
+  "/services": {}
 }
 
 
