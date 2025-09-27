@@ -1,0 +1,12 @@
+{
+    "name": "build-finder",
+    "private": true,
+    "workspaces": [
+        "frontend"
+    ],
+    "scripts": {
+        "dev": "npm run dev -w frontend",
+        "lint": "npm run lint -w frontend",
+        "format": "npm run format -w frontend"
+    }
+}
