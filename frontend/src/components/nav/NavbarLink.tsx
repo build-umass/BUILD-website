@@ -1,19 +1,35 @@
 import React from 'react';
+import Link from 'next/link';
+import { PageLink } from '../../content/nav';
 
-export default function NavbarLink({
-  href,
-  children,
-}: {
-  href: string;
-  children: React.ReactNode;
-}) {
-  const external = href.startsWith('http');
-  if (external) {
+interface NavbarLinkProps {
+  page: PageLink;
+  linkDisplay?: string;
+}
+
+export default function NavbarLink({ page, linkDisplay }: NavbarLinkProps) {
+  const isExternal = page.link?.startsWith('http') ?? false;
+  const displayText = linkDisplay || page.name;
+
+  if (isExternal) {
     return (
-      <a href={href} target="_blank" rel="noopener noreferrer">
-        {children}
+      <a
+        href={page.link}
+        target="_blank"
+        rel="noreferrer noopener"
+        className="font-montserrat text-white no-underline hover:underline"
+      >
+        {displayText}
       </a>
     );
   }
-  return <a href={href}>{children}</a>;
+
+  return (
+    <Link
+      href={page.link || '#'}
+      className="font-montserrat text-white no-underline hover:underline"
+    >
+      {displayText}
+    </Link>
+  );
 }

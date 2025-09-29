@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 export type Breakpoint = {
   width: number;
@@ -11,33 +11,47 @@ export type Breakpoint = {
   smAndDown: boolean;
 };
 
+// Simple debounce function to avoid external dependencies
+const debounce = <T extends (...args: any[]) => any>(
+  func: T,
+  wait: number
+): ((...args: Parameters<T>) => void) => {
+  let timeout: NodeJS.Timeout | undefined;
+  return (...args: Parameters<T>) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func(...args), wait);
+  };
+};
+
 export function useBreakpoint(): Breakpoint {
   const [width, setWidth] = useState<number>(
     typeof window !== 'undefined' ? window.innerWidth : 1200
   );
 
-  useEffect(() => {
-    function onResize() {
+  const handleResize = useCallback(
+    debounce(() => {
       setWidth(window.innerWidth);
-    }
+    }, 150),
+    []
+  );
+
+  useEffect(() => {
     if (typeof window !== 'undefined') {
-      window.addEventListener('resize', onResize);
+      window.addEventListener('resize', handleResize);
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
     }
-    return () => {
-      if (typeof window !== 'undefined') {
-        window.removeEventListener('resize', onResize);
-      }
-    };
-  }, []);
+  }, [handleResize]);
 
   const bp: Breakpoint = {
     width,
-    xs: width < 576,
-    sm: width >= 576 && width < 768,
-    md: width >= 768 && width < 992,
-    lg: width >= 992 && width < 1200,
-    xl: width >= 1200,
-    smAndUp: width >= 576,
+    xs: width < 640, // Tailwind's sm breakpoint
+    sm: width >= 640 && width < 768,
+    md: width >= 768 && width < 1024,
+    lg: width >= 1024 && width < 1280,
+    xl: width >= 1280,
+    smAndUp: width >= 640,
     smAndDown: width < 768,
   };
 

@@ -1,15 +1,33 @@
 import React from 'react';
 
-type Props = {
+interface JumbotronHeaderProps {
   title?: string;
   subtitle?: string;
-};
+  actions?: React.ReactNode;
+}
 
-export default function JumbotronHeader({ title, subtitle }: Props) {
+export default function JumbotronHeader({
+  title,
+  subtitle,
+  actions,
+}: JumbotronHeaderProps) {
   return (
-    <header>
-      <h1>{title}</h1>
-      <p>{subtitle}</p>
-    </header>
+    <div className="h-[500px] flex justify-center items-center">
+      <div className="max-w-4xl w-[90%]">
+        <div className="flex flex-col items-center text-center space-y-6">
+          <div>
+            <h1 className="text-white text-4xl md:text-5xl lg:text-6xl font-bold font-montserrat">
+              {title}
+            </h1>
+          </div>
+          <div>
+            <p className="text-white text-lg md:text-xl lg:text-2xl font-montserrat leading-relaxed">
+              {subtitle}
+            </p>
+          </div>
+          <div className="flex justify-center items-center">{actions}</div>
+        </div>
+      </div>
+    </div>
   );
 }
