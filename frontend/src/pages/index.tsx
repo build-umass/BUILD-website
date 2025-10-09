@@ -11,28 +11,28 @@ export default function Home() {
       {/* Hero Section */}
       <div className="relative min-h-screen bg-gradient-to-br from-red-900 via-red-700 to-red-600 flex items-center justify-center overflow-hidden">
         {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-10">
+        <div className="absolute inset-0 opacity-100 z-0">
           <Image
-            src="/images/square-pattern.svg"
+            src = "/images/square-pattern.svg"
             alt=""
             fill
-            className="object-cover"
+            className="object-cover select-none"
             priority
           />
         </div>
 
         <JumbotronHeader
-          title="BUILD UMass"
-          subtitle="Building innovative software solutions for the University of Massachusetts and beyond"
+          title="Building a better world with technology"
+          subtitle="We are a group of students committed to provide non-profits, startups and local businesses with scalable technological solutions through pro-bono software development and consulting"
           actions={
             <div className="flex flex-col sm:flex-row gap-4 mt-8">
               <Link href="/projects">
-                <button className="bg-white text-red-600 font-montserrat font-bold py-3 px-8 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 transition-all duration-300 hover:px-10">
-                  View Our Work
+              <button className="w-full sm:w-auto border-2 border-white text-white font-montserrat font-bold py-3 px-8 rounded-md hover:bg-white hover:text-red-600 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 transition-all duration-300 min-w-[160px] h-[48px] flex items-center justify-center">
+              View Our Work
                 </button>
               </Link>
               <Link href="/apply">
-                <button className="border-2 border-white text-white font-montserrat font-bold py-3 px-8 rounded-md hover:bg-white hover:text-red-600 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 transition-all duration-300">
+                <button className="w-full sm:w-auto border-2 border-white text-white font-montserrat font-bold py-3 px-8 rounded-md hover:bg-white hover:text-red-600 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 transition-all duration-300 min-w-[160px] h-[48px] flex items-center justify-center">
                   Join Our Team
                 </button>
               </Link>
@@ -40,7 +40,6 @@ export default function Home() {
           }
         />
       </div>
-
       {/* Services Section */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
@@ -131,10 +130,8 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold font-montserrat text-gray-800 mb-4">
-              Trusted by Leading Organizations
-            </h2>
+            Our members are brilliant students and professionals who end up working for the best companies in the industry.            </h2>
             <p className="text-lg text-gray-600 font-source-sans">
-              We're proud to work with industry leaders and innovative companies
             </p>
           </div>
           <CompanyLogos />
@@ -147,24 +144,24 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
             <div>
               <div className="text-4xl font-bold font-montserrat text-red-600 mb-2">
-                50+
+                70+
+              </div>
+              <div className="text-gray-600 font-source-sans">
+                Members
+              </div>
+            </div>
+            <div>
+              <div className="text-4xl font-bold font-montserrat text-red-600 mb-2">
+                6+
+              </div>
+              <div className="text-gray-600 font-source-sans">Majors</div>
+            </div>
+            <div>
+              <div className="text-4xl font-bold font-montserrat text-red-600 mb-2">
+                30+
               </div>
               <div className="text-gray-600 font-source-sans">
                 Projects Completed
-              </div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold font-montserrat text-red-600 mb-2">
-                100+
-              </div>
-              <div className="text-gray-600 font-source-sans">Team Members</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold font-montserrat text-red-600 mb-2">
-                5+
-              </div>
-              <div className="text-gray-600 font-source-sans">
-                Years of Experience
               </div>
             </div>
             <div>
@@ -179,11 +176,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Join Us Hero */}
-      <JoinUsHero />
-
-      {/* About Preview Section */}
-      <section className="py-20 bg-gray-50">
+            {/* About Preview Section */}
+            <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -221,6 +215,11 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Join Us Hero */}
+      <JoinUsHero />
+
+
     </div>
   );
 }
