@@ -4,21 +4,7 @@ import React, { useRef, useState } from 'react';
 import Image from 'next/image';
 import ProjectModal from './ProjectModal';
 import styles from './ProjectCard.module.css';
-
-interface ProjectMember {
-  name: string;
-  role?: string;
-}
-
-interface ProjectData {
-  id?: string | number;
-  title: string;
-  description: string;
-  image_url: string;
-  project_lead: ProjectMember[];
-  sdes: ProjectMember[];
-  product_managers: ProjectMember[];
-}
+import { ProjectData } from '@/content/projects';
 
 interface ProjectCardProps {
   projectData: ProjectData;
@@ -30,7 +16,7 @@ export default function ProjectCard({ projectData }: ProjectCardProps) {
 
   // Counting the members
   const projectLeadCount = projectData.project_lead.length !== 0 ? 1 : 0;
-  const sdesCount = projectData.sdes.length;
+  const sdesCount = projectData.sdes.length ?? 0;
   const productManagersCount = projectData.product_managers.length;
   const membersCount = projectLeadCount + sdesCount + productManagersCount;
 
@@ -61,7 +47,12 @@ export default function ProjectCard({ projectData }: ProjectCardProps) {
           </h5>
           {membersCount !== 0 && (
             <h6 className="text-sm font-medium text-gray-500 mb-3">
-              {membersCount} members
+              {membersCount} members ({projectData.year})
+            </h6>
+          )}
+          {membersCount === 0 && (
+            <h6 className="text-sm font-medium text-gray-500 mb-3">
+              ({projectData.year})
             </h6>
           )}
           <div

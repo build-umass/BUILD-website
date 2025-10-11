@@ -2,22 +2,7 @@
 
 import React, { useEffect } from 'react';
 import Image from 'next/image';
-
-interface ProjectMember {
-  name: string;
-  role?: string;
-}
-
-interface ProjectData {
-  id?: string | number;
-  title: string;
-  description: string;
-  image_url: string;
-  project_lead: ProjectMember[];
-  sdes: ProjectMember[];
-  product_managers: ProjectMember[];
-  project_url?: string;
-}
+import { ProjectData } from '@/content/projects';
 
 interface ProjectModalProps {
   show: boolean;
