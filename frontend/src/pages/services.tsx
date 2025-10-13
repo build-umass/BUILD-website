@@ -220,7 +220,7 @@ export default function Services() {
             </div>
             <div className="flex justify-center">
               <Image
-                src="/images/illustrations/questions.svg"
+                src="/images/illustrations/consulting.svg"
                 alt="Tech Consulting"
                 width={400}
                 height={300}
@@ -295,62 +295,6 @@ export default function Services() {
                 We deliver your solution with comprehensive testing,
                 documentation, and ongoing support.
               </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Technologies Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold font-montserrat text-gray-800 mb-4">
-              Technologies We Use
-            </h2>
-            <p className="text-xl text-gray-600 font-source-sans max-w-3xl mx-auto">
-              We work with modern, proven technologies to build robust and
-              scalable solutions
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8">
-            <div className="text-center">
-              <div className="bg-gray-100 p-6 rounded-lg mb-3">
-                <div className="text-2xl font-bold text-gray-800">React</div>
-              </div>
-              <p className="text-sm text-gray-600 font-source-sans">Frontend</p>
-            </div>
-            <div className="text-center">
-              <div className="bg-gray-100 p-6 rounded-lg mb-3">
-                <div className="text-2xl font-bold text-gray-800">Node.js</div>
-              </div>
-              <p className="text-sm text-gray-600 font-source-sans">Backend</p>
-            </div>
-            <div className="text-center">
-              <div className="bg-gray-100 p-6 rounded-lg mb-3">
-                <div className="text-2xl font-bold text-gray-800">Python</div>
-              </div>
-              <p className="text-sm text-gray-600 font-source-sans">Backend</p>
-            </div>
-            <div className="text-center">
-              <div className="bg-gray-100 p-6 rounded-lg mb-3">
-                <div className="text-2xl font-bold text-gray-800">
-                  PostgreSQL
-                </div>
-              </div>
-              <p className="text-sm text-gray-600 font-source-sans">Database</p>
-            </div>
-            <div className="text-center">
-              <div className="bg-gray-100 p-6 rounded-lg mb-3">
-                <div className="text-2xl font-bold text-gray-800">AWS</div>
-              </div>
-              <p className="text-sm text-gray-600 font-source-sans">Cloud</p>
-            </div>
-            <div className="text-center">
-              <div className="bg-gray-100 p-6 rounded-lg mb-3">
-                <div className="text-2xl font-bold text-gray-800">Docker</div>
-              </div>
-              <p className="text-sm text-gray-600 font-source-sans">DevOps</p>
             </div>
           </div>
         </div>
