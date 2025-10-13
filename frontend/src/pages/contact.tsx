@@ -241,10 +241,10 @@ export default function Contact() {
                     </h3>
                     <p className="text-gray-600 font-source-sans">
                       <a
-                        href="mailto:contact@buildumass.com"
+                        href="mailto:build.umass@gmail.com"
                         className="hover:text-red-600 transition-colors"
                       >
-                        contact@buildumass.com
+                        build.umass@gmail.com
                       </a>
                     </p>
                   </div>
@@ -395,9 +395,7 @@ export default function Contact() {
                 What's the cost for a project?
               </h3>
               <p className="text-gray-600 font-source-sans">
-                As a student organization, we offer competitive rates. Costs
-                depend on project scope, timeline, and requirements. Contact us
-                for a detailed quote.
+                We do not charge for building projects at this time. We provide pro-bono software development and consulting for interested clients.
               </p>
             </div>
 
