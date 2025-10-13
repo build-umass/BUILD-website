@@ -18,28 +18,14 @@ export default function Apply() {
       title: 'Software Developer',
       description:
         'Work on real-world projects using modern technologies like React, Node.js, and Python. Gain experience in full-stack development, API design, and database management.',
-      applicationLink: 'https://forms.gle/software-dev-application',
+      applicationLink: '',
       applicationOpen: true,
     },
     {
       title: 'Product Manager',
       description:
         'Lead project planning, coordinate with clients, and ensure successful project delivery. Develop skills in project management, client communication, and strategic thinking.',
-      applicationLink: 'https://forms.gle/product-manager-application',
-      applicationOpen: true,
-    },
-    {
-      title: 'UI/UX Designer',
-      description:
-        'Create intuitive and beautiful user interfaces. Work with design tools like Figma, conduct user research, and collaborate with developers to bring designs to life.',
-      applicationLink: 'https://forms.gle/ux-designer-application',
-      applicationOpen: false,
-    },
-    {
-      title: 'DevOps Engineer',
-      description:
-        'Manage deployment pipelines, cloud infrastructure, and monitoring systems. Work with tools like Docker, AWS, and CI/CD pipelines to ensure reliable software delivery.',
-      applicationLink: 'https://forms.gle/devops-application',
+      applicationLink: '',
       applicationOpen: true,
     },
   ];
@@ -80,7 +66,7 @@ export default function Apply() {
     },
     {
       q: 'Do I need to be a Computer Science major?',
-      a: 'Not at all! We have members from various majors including engineering, business, and liberal arts. What matters most is your interest in technology and willingness to learn.',
+      a: 'Not at all! We have members from various majors including engineering, business, and data science. What matters most is your interest in technology and willingness to learn.',
     },
     {
       q: 'How are projects assigned?',
@@ -88,7 +74,7 @@ export default function Apply() {
     },
     {
       q: 'What happens after I apply?',
-      a: "After reviewing your application, we'll invite qualified candidates for a brief interview. This is a casual conversation to learn more about your interests and answer any questions you have.",
+      a: "After reviewing your application, we'll invite qualified candidates for a brief interview. This is a conversation consisting of behavioral and technical questions to learn more about your interests and answer any questions you have.",
     },
   ];
 
@@ -111,7 +97,6 @@ export default function Apply() {
           subtitle="Be part of a community that builds innovative software solutions and develops professional skills"
         />
       </div>
-
       {/* What We Look For Section */}
       <section id="Roles" className="py-20 bg-white">
         <div className="container mx-auto px-4">
@@ -124,8 +109,7 @@ export default function Apply() {
               developers and make an impact
             </p>
           </div>
-
-          <div className="flex flex-wrap justify-center gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 justify-items-center">
             {lookingFor.map((item, index) => (
               <LookForCard
                 key={index}
@@ -200,8 +184,7 @@ export default function Apply() {
                 Interview
               </h3>
               <p className="text-gray-600 font-source-sans">
-                Have a casual conversation with our team to learn more about
-                BUILD and your interests.
+              Have an interview with a BUILD team member consisting of behavioral and technical questions.
               </p>
             </div>
 
@@ -280,31 +263,10 @@ export default function Apply() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-red-900 to-red-600">
+      <section className="py-5 bg-gradient-to-r from-red-900 to-red-600">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold font-montserrat text-white mb-6">
-            Ready to Apply?
-          </h2>
           <p className="text-xl text-white font-source-sans mb-8 max-w-3xl mx-auto">
-            Join our community of passionate developers and start building
-            amazing software solutions today.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="https://forms.gle/general-application"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-white text-red-600 font-montserrat font-bold py-3 px-8 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 transition-colors"
-            >
-              Start Application
-            </a>
-            <a
-              href="/contact"
-              className="border-2 border-white text-white font-montserrat font-bold py-3 px-8 rounded-md hover:bg-white hover:text-red-600 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 transition-colors"
-            >
-              Ask Questions
-            </a>
-          </div>
         </div>
       </section>
     </div>
