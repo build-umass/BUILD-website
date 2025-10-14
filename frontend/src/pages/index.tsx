@@ -40,6 +40,50 @@ export default function Home() {
           }
         />
       </div>
+
+
+
+            {/* About Preview Section */}
+            <section className="py-20 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-4xl font-bold font-montserrat text-gray-800 mb-6">
+                About BUILD UMass
+              </h2>
+              <p className="text-lg text-gray-600 font-source-sans leading-relaxed mb-6">
+                BUILD UMass is a student-run software development organization
+                at the University of Massachusetts Amherst. We connect talented
+                students with real-world projects, helping them develop
+                professional skills while delivering high-quality software
+                solutions to our clients.
+              </p>
+              <p className="text-lg text-gray-600 font-source-sans leading-relaxed mb-8">
+                Our mission is to bridge the gap between academic learning and
+                industry practice, creating opportunities for students to work
+                on meaningful projects while providing organizations with
+                cost-effective, innovative solutions.
+              </p>
+              <Link href="/about">
+                <button className="bg-red-600 text-white font-montserrat font-bold py-3 px-8 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition-colors">
+                  Learn More About Us
+                </button>
+              </Link>
+            </div>
+            <div className="flex justify-center">
+              <Image
+                src="/images/illustrations/teamwork.svg"
+                alt="Team collaboration"
+                width={400}
+                height={300}
+                className="max-w-full h-auto"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      
       {/* Services Section */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
@@ -176,45 +220,6 @@ export default function Home() {
         </div>
       </section>
 
-            {/* About Preview Section */}
-            <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-4xl font-bold font-montserrat text-gray-800 mb-6">
-                About BUILD UMass
-              </h2>
-              <p className="text-lg text-gray-600 font-source-sans leading-relaxed mb-6">
-                BUILD UMass is a student-run software development organization
-                at the University of Massachusetts Amherst. We connect talented
-                students with real-world projects, helping them develop
-                professional skills while delivering high-quality software
-                solutions to our clients.
-              </p>
-              <p className="text-lg text-gray-600 font-source-sans leading-relaxed mb-8">
-                Our mission is to bridge the gap between academic learning and
-                industry practice, creating opportunities for students to work
-                on meaningful projects while providing organizations with
-                cost-effective, innovative solutions.
-              </p>
-              <Link href="/about">
-                <button className="bg-red-600 text-white font-montserrat font-bold py-3 px-8 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition-colors">
-                  Learn More About Us
-                </button>
-              </Link>
-            </div>
-            <div className="flex justify-center">
-              <Image
-                src="/images/illustrations/teamwork.svg"
-                alt="Team collaboration"
-                width={400}
-                height={300}
-                className="max-w-full h-auto"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Join Us Hero */}
       <JoinUsHero />
