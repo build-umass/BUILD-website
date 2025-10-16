@@ -81,7 +81,7 @@ export default function Projects() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
             <div className="bg-white p-8 rounded-lg shadow-sm">
               <div className="text-4xl font-bold font-montserrat text-red-600 mb-2">
-                50+
+                30+
               </div>
               <div className="text-gray-600 font-source-sans">
                 Projects Completed
@@ -89,7 +89,7 @@ export default function Projects() {
             </div>
             <div className="bg-white p-8 rounded-lg shadow-sm">
               <div className="text-4xl font-bold font-montserrat text-red-600 mb-2">
-                30K+
+                15K+
               </div>
               <div className="text-gray-600 font-source-sans">
                 Users Impacted
@@ -97,13 +97,13 @@ export default function Projects() {
             </div>
             <div className="bg-white p-8 rounded-lg shadow-sm">
               <div className="text-4xl font-bold font-montserrat text-red-600 mb-2">
-                100+
+                70+
               </div>
               <div className="text-gray-600 font-source-sans">Team Members</div>
             </div>
             <div className="bg-white p-8 rounded-lg shadow-sm">
               <div className="text-4xl font-bold font-montserrat text-red-600 mb-2">
-                15+
+                25+
               </div>
               <div className="text-gray-600 font-source-sans">
                 Client Organizations
