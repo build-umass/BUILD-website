@@ -17,7 +17,7 @@ export default function NavbarSm({ pages }: NavbarSmProps) {
 
   return (
     <>
-      <nav className="w-full flex justify-between items-center py-5">
+      <nav className="w-full flex justify-between items-center py-5 px-4 md:px-6 lg:px-8">
         <Link
           href="/"
           className="font-bold text-xl text-white font-montserrat hover:underline"
@@ -31,7 +31,7 @@ export default function NavbarSm({ pages }: NavbarSmProps) {
           aria-label="Open navigation menu"
         >
           <svg
-            className="w-6 h-6"
+            className="w-8 h-8"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
