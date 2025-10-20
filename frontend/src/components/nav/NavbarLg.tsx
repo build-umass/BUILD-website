@@ -9,10 +9,7 @@ interface NavbarLgProps {
 export default function NavbarLg({ pages }: NavbarLgProps) {
   return (
     <nav className="w-full flex justify-between items-center py-5">
-      <Link
-        href="/"
-        className="font-bold text-xl text-white font-montserrat hover:underline"
-      >
+      <Link href="/" className="font-bold text-xl text-white font-montserrat">
         BUILD UMass
       </Link>
 
