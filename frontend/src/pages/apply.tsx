@@ -109,7 +109,8 @@ export default function Apply() {
               developers and make an impact
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 justify-items-center">
+
+          <div className="flex flex-wrap justify-center">
             {lookingFor.map((item, index) => (
               <LookForCard
                 key={index}
@@ -184,7 +185,8 @@ export default function Apply() {
                 Interview
               </h3>
               <p className="text-gray-600 font-source-sans">
-              Have an interview with a BUILD team member consisting of behavioral and technical questions.
+                Have an interview with a BUILD team member consisting of
+                behavioral and technical questions.
               </p>
             </div>
 
@@ -265,8 +267,7 @@ export default function Apply() {
       {/* CTA Section */}
       <section className="py-5 bg-gradient-to-r from-red-900 to-red-600">
         <div className="container mx-auto px-4 text-center">
-          <p className="text-xl text-white font-source-sans mb-8 max-w-3xl mx-auto">
-          </p>
+          <p className="text-xl text-white font-source-sans mb-8 max-w-3xl mx-auto"></p>
         </div>
       </section>
     </div>
