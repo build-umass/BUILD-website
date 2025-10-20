@@ -2,122 +2,10 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import JumbotronHeader from '../components/JumbotronHeader';
 import ProjectCard from '../components/ProjectCard';
-
-interface ProjectMember {
-  name: string;
-  role?: string;
-}
-
-interface ProjectData {
-  id: string | number;
-  title: string;
-  description: string;
-  image_url: string;
-  project_lead: ProjectMember[];
-  sdes: ProjectMember[];
-  product_managers: ProjectMember[];
-  project_url?: string;
-  category: string;
-}
+import { categories, projects } from '@/content/projects';
 
 export default function Projects() {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
-
-  // Sample project data - in a real app, this would come from an API
-  const projects: ProjectData[] = [
-    {
-      id: 1,
-      title: 'UMass Student Portal',
-      description:
-        'A comprehensive student portal that provides access to academic records, course registration, and campus services. Built with React and Node.js, this platform serves over 30,000 students with real-time data synchronization and mobile-responsive design.',
-      image_url: '/images/projects/CampusConnectPhoto.png',
-      project_lead: [{ name: 'Sarah Chen', role: 'Technical Lead' }],
-      sdes: [
-        { name: 'Alex Rodriguez', role: 'Frontend Developer' },
-        { name: 'Emily Johnson', role: 'Backend Developer' },
-        { name: 'David Kim', role: 'DevOps Engineer' },
-      ],
-      product_managers: [{ name: 'Maria Garcia', role: 'Product Manager' }],
-      project_url: 'https://studentportal.umass.edu',
-      category: 'Web Development',
-    },
-    {
-      id: 2,
-      title: 'Fitness Tracker App',
-      description:
-        'A mobile application that helps students track their fitness goals, connect with workout buddies, and access campus fitness facilities. Features include workout logging, progress tracking, and social features for motivation.',
-      image_url: '/images/projects/UMassFitness_S23.png',
-      project_lead: [{ name: 'James Wilson', role: 'Technical Lead' }],
-      sdes: [
-        { name: 'Lisa Park', role: 'Mobile Developer' },
-        { name: 'Michael Brown', role: 'Backend Developer' },
-      ],
-      product_managers: [{ name: 'Jennifer Lee', role: 'Product Manager' }],
-      category: 'Mobile Development',
-    },
-    {
-      id: 3,
-      title: 'AI Student Assistant',
-      description:
-        'An intelligent chatbot that helps students with academic questions, course recommendations, and campus navigation. Built using natural language processing and machine learning to provide personalized assistance 24/7.',
-      image_url: '/images/projects/AIS_S23.png',
-      project_lead: [{ name: 'Ryan Thompson', role: 'AI Lead' }],
-      sdes: [
-        { name: 'Sophia Chen', role: 'ML Engineer' },
-        { name: 'Kevin Zhang', role: 'Backend Developer' },
-        { name: 'Amanda Davis', role: 'Frontend Developer' },
-      ],
-      product_managers: [{ name: 'Robert Martinez', role: 'Product Manager' }],
-      category: 'AI/ML',
-    },
-    {
-      id: 4,
-      title: 'Event Management System',
-      description:
-        'A comprehensive platform for managing campus events, including registration, ticketing, and attendee management. Features real-time updates, payment processing, and analytics for event organizers.',
-      image_url: '/images/projects/IUCG_S23.png',
-      project_lead: [{ name: 'Taylor Swift', role: 'Technical Lead' }],
-      sdes: [
-        { name: 'Chris Anderson', role: 'Full Stack Developer' },
-        { name: 'Rachel Green', role: 'Frontend Developer' },
-      ],
-      product_managers: [{ name: 'Mark Johnson', role: 'Product Manager' }],
-      category: 'Web Development',
-    },
-    {
-      id: 5,
-      title: 'Sustainability Dashboard',
-      description:
-        'A data visualization platform that tracks campus sustainability metrics, including energy usage, waste reduction, and carbon footprint. Helps the university make data-driven decisions for environmental initiatives.',
-      image_url: '/images/projects/SAS_S23.png',
-      project_lead: [{ name: 'Jordan Smith', role: 'Data Lead' }],
-      sdes: [
-        { name: 'Alex Morgan', role: 'Data Engineer' },
-        { name: 'Casey White', role: 'Frontend Developer' },
-      ],
-      product_managers: [{ name: 'Sam Taylor', role: 'Product Manager' }],
-      category: 'Data Analytics',
-    },
-    {
-      id: 6,
-      title: 'Student Housing Platform',
-      description:
-        'A platform that connects students with housing options, roommates, and rental services. Features include property listings, roommate matching, and secure payment processing for off-campus housing.',
-      image_url: '/images/projects/StudentBridges_S22.png',
-      project_lead: [{ name: 'Morgan Lee', role: 'Technical Lead' }],
-      sdes: [
-        { name: 'Drew Johnson', role: 'Full Stack Developer' },
-        { name: 'Casey Brown', role: 'Backend Developer' },
-      ],
-      product_managers: [{ name: 'Jordan Davis', role: 'Product Manager' }],
-      category: 'Web Development',
-    },
-  ];
-
-  const categories = [
-    'All',
-    ...Array.from(new Set(projects.map((p) => p.category))),
-  ];
 
   const filteredProjects =
     selectedCategory === 'All'
@@ -188,16 +76,12 @@ export default function Projects() {
             <h2 className="text-4xl font-bold font-montserrat text-gray-800 mb-4">
               Project Impact
             </h2>
-            <p className="text-xl text-gray-600 font-source-sans max-w-3xl mx-auto">
-              Our projects have made a significant impact on the UMass community
-              and beyond
-            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
             <div className="bg-white p-8 rounded-lg shadow-sm">
               <div className="text-4xl font-bold font-montserrat text-red-600 mb-2">
-                50+
+                30+
               </div>
               <div className="text-gray-600 font-source-sans">
                 Projects Completed
@@ -205,7 +89,7 @@ export default function Projects() {
             </div>
             <div className="bg-white p-8 rounded-lg shadow-sm">
               <div className="text-4xl font-bold font-montserrat text-red-600 mb-2">
-                30K+
+                15K+
               </div>
               <div className="text-gray-600 font-source-sans">
                 Users Impacted
@@ -213,13 +97,13 @@ export default function Projects() {
             </div>
             <div className="bg-white p-8 rounded-lg shadow-sm">
               <div className="text-4xl font-bold font-montserrat text-red-600 mb-2">
-                100+
+                70+
               </div>
               <div className="text-gray-600 font-source-sans">Team Members</div>
             </div>
             <div className="bg-white p-8 rounded-lg shadow-sm">
               <div className="text-4xl font-bold font-montserrat text-red-600 mb-2">
-                15+
+                25+
               </div>
               <div className="text-gray-600 font-source-sans">
                 Client Organizations
@@ -236,8 +120,9 @@ export default function Projects() {
             Have a Project in Mind?
           </h2>
           <p className="text-xl text-white font-source-sans mb-8 max-w-3xl mx-auto">
-            Let's work together to bring your ideas to life. We're always
-            excited to take on new challenges and create innovative solutions.
+            Let&#39;s work together to bring your ideas to life. We&#39;re
+            always excited to take on new challenges and create innovative
+            solutions.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
