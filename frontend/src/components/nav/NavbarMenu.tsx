@@ -38,9 +38,10 @@ export default function NavbarMenu({ show, pages, close }: NavbarMenuProps) {
           Browse BUILD
         </h1>
 
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-3">
           {pages.map((page, i) => (
-            <div key={i} className="block">
+            <div key={i}
+            className="block bg-black/10 rounded-lg p-3 backdrop-blur-sm">
               <NavbarLink page={page} linkDisplay={page.name} />
               {page.description && (
                 <div className="text-white text-sm opacity-80 ml-4 mt-1">
