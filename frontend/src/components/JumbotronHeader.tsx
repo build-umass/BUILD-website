@@ -12,8 +12,8 @@ export default function JumbotronHeader({
   actions,
 }: JumbotronHeaderProps) {
   return (
-    <div className="h-[500px] flex justify-center items-center">
-      <div className="max-w-4xl w-[90%]">
+    <div className="relative z-10 h-[500px] flex justify-center items-center">
+      <div className="max-w-6xl w-[100%]">
         <div className="flex flex-col items-center text-center space-y-6">
           <div>
             <h1 className="text-white text-4xl md:text-5xl lg:text-6xl font-bold font-montserrat">
