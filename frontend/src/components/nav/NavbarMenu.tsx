@@ -6,6 +6,7 @@ import NavbarLink from './NavbarLink';
 import NavbarMenuItem from './NavbarMenuItem';
 import { PageLink } from '../../content/nav';
 import styles from './NavbarMenu.module.css';
+import Link from 'next/link';
 
 interface NavbarMenuProps {
   show: boolean;
@@ -40,15 +41,19 @@ export default function NavbarMenu({ show, pages, close }: NavbarMenuProps) {
 
         <div className="flex flex-col gap-3">
           {pages.map((page, i) => (
-            <div key={i}
-            className="block bg-black/10 rounded-lg p-3 backdrop-blur-sm">
+            <Link
+            key={i}
+            href={page.link || '#'}
+            onClick={close}
+            className="block bg-black/10 rounded-lg p-3 backdrop-blur-sm"
+            >
               <NavbarLink page={page} linkDisplay={page.name} />
               {page.description && (
                 <div className="text-white text-sm opacity-80 ml-4 mt-1">
                   {page.description}
                 </div>
               )}
-            </div>
+            </Link>
           ))}
         </div>
       </div>

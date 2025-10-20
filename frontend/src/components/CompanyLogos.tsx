@@ -73,14 +73,14 @@ export default function CompanyLogos() {
   ];
 
   return (
-    <div className="flex justify-center items-center flex-wrap gap-24">
+    <div className="flex justify-center items-center flex-wrap gap-8 md:gap-16 lg:gap-24">
       {logos.map((logo, index) => (
         <Image
           key={index}
           src={logoPath + logo.src}
           alt={logo.name}
-          width={300}
-          height={150}
+          width={200}
+          height={100}
           className="object-contain"
         />
       ))}
