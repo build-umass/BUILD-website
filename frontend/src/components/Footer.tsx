@@ -14,7 +14,7 @@ export default function Footer() {
                 BUILD UMass
               </h6>
               <p className="text-sm font-montserrat font-normal text-white text-opacity-70 mb-0 py-0">
-                © 2025 BUILD UMass
+                © {new Date().getFullYear()} BUILD UMass
               </p>
               <div className="flex justify-start items-center pt-2 pl-2.5">
                 <a
