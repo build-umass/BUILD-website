@@ -13,7 +13,7 @@ export default function Home() {
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-100 z-0">
           <Image
-            src = "/images/square-pattern.svg"
+            src="/images/square-pattern.svg"
             alt=""
             fill
             className="object-cover select-none"
@@ -27,8 +27,8 @@ export default function Home() {
           actions={
             <div className="flex flex-col sm:flex-row gap-4 mt-8">
               <Link href="/projects">
-              <button className="w-full sm:w-auto border-2 border-white text-white font-montserrat font-bold py-3 px-8 rounded-md hover:bg-white hover:text-red-600 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 transition-all duration-300 min-w-[160px] h-[48px] flex items-center justify-center">
-              View Our Work
+                <button className="w-full sm:w-auto border-2 border-white text-white font-montserrat font-bold py-3 px-8 rounded-md hover:bg-white hover:text-red-600 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 transition-all duration-300 min-w-[160px] h-[48px] flex items-center justify-center">
+                  View Our Work
                 </button>
               </Link>
               <Link href="/apply">
@@ -41,10 +41,8 @@ export default function Home() {
         />
       </div>
 
-
-
-            {/* About Preview Section */}
-            <section className="py-20 bg-gray-50">
+      {/* About Preview Section */}
+      <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -83,7 +81,6 @@ export default function Home() {
         </div>
       </section>
 
-      
       {/* Services Section */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
@@ -142,7 +139,7 @@ export default function Home() {
             <div className="text-center p-8 rounded-lg hover:shadow-lg transition-shadow duration-300">
               <div className="mb-6">
                 <Image
-                  src="/images/illustrations/questions.svg"
+                  src="/images/illustrations/data.svg"
                   alt="Tech Consulting"
                   width={120}
                   height={120}
@@ -174,9 +171,10 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold font-montserrat text-gray-800 mb-4">
-            Our members are brilliant students and professionals who end up working for the best companies in the industry.            </h2>
-            <p className="text-lg text-gray-600 font-source-sans">
-            </p>
+              Our members are brilliant students and professionals who end up
+              working for the best companies in the industry.{' '}
+            </h2>
+            <p className="text-lg text-gray-600 font-source-sans"></p>
           </div>
           <CompanyLogos />
         </div>
@@ -190,9 +188,7 @@ export default function Home() {
               <div className="text-4xl font-bold font-montserrat text-red-600 mb-2">
                 70+
               </div>
-              <div className="text-gray-600 font-source-sans">
-                Members
-              </div>
+              <div className="text-gray-600 font-source-sans">Members</div>
             </div>
             <div>
               <div className="text-4xl font-bold font-montserrat text-red-600 mb-2">
@@ -220,11 +216,8 @@ export default function Home() {
         </div>
       </section>
 
-
       {/* Join Us Hero */}
       <JoinUsHero />
-
-
     </div>
   );
 }
