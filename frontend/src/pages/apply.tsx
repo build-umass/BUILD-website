@@ -13,6 +13,7 @@ export default function Apply() {
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
 
   // Sample role data - in a real app, this would come from an API
+  // We need to add stuff here
   const roles = [
     {
       title: 'Software Developer',
