@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import JumbotronHeader from '../components/JumbotronHeader';
 import ApplicationCard from '../components/apply/ApplicationCard';
@@ -12,42 +12,11 @@ interface FAQ {
 }
 
 export default function Apply() {
-  const [applicationsOpen, setApplicationsOpen] = useState(false);
+  // CHANGE THIS VARIABLE TO CONTROL APPLICATION STATUS
+  const APPLICATIONS_OPEN = false; // Set to true to show role cards, false to show closed card
+
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
   const [isWaitlistModalOpen, setIsWaitlistModalOpen] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-
-  // Load the applications status from storage on mount
-  useEffect(() => {
-    async function loadApplicationsStatus() {
-      try {
-        const result = await window.storage.get('applications_open', true);
-        if (result && result.value !== null) {
-          setApplicationsOpen(result.value === 'true');
-        }
-      } catch (error) {
-        console.log('No saved status found, using default');
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    loadApplicationsStatus();
-  }, []);
-
-  // Toggle applications open/closed and save to storage
-  const toggleApplications = async () => {
-    const newStatus = !applicationsOpen;
-    setApplicationsOpen(newStatus);
-
-    try {
-      await window.storage.set('applications_open', String(newStatus), true);
-      alert(`Applications are now ${newStatus ? 'OPEN' : 'CLOSED'}`);
-    } catch (error) {
-      console.error('Failed to save status:', error);
-      alert('Failed to save status. Please try again.');
-    }
-  };
 
   // Sample role data - in a real app, this would come from an API
   const roles = [
@@ -115,34 +84,8 @@ export default function Apply() {
     },
   ];
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-xl text-gray-600">Loading...</div>
-      </div>
-    );
-  }
-
   return (
     <div>
-      {/* Admin Control Button - Hidden by default, click 5 times on title to reveal */}
-      <div className="fixed top-4 right-4 z-50">
-        {isAdmin && (
-          <button
-            onClick={toggleApplications}
-            className={`px-4 py-2 rounded-lg font-bold text-white shadow-lg transition-all ${
-              applicationsOpen
-                ? 'bg-red-600 hover:bg-red-700'
-                : 'bg-green-600 hover:bg-green-700'
-            }`}
-          >
-            {applicationsOpen
-              ? '🔒 Close Applications'
-              : '🔓 Open Applications'}
-          </button>
-        )}
-      </div>
-
       {/* Hero Section */}
       <div className="relative min-h-[60vh] bg-gradient-to-br from-red-900 via-red-700 to-red-600 flex items-center justify-center overflow-hidden">
         {/* Background Pattern */}
@@ -155,21 +98,10 @@ export default function Apply() {
           />
         </div>
 
-        <div
-          onClick={() => {
-            const clicks = (window as any).adminClicks || 0;
-            (window as any).adminClicks = clicks + 1;
-            if ((window as any).adminClicks >= 5) {
-              setIsAdmin(true);
-              (window as any).adminClicks = 0;
-            }
-          }}
-        >
-          <JumbotronHeader
-            title="Join BUILD UMass"
-            subtitle="Be part of a community that builds innovative software solutions and develops professional skills"
-          />
-        </div>
+        <JumbotronHeader
+          title="Join BUILD UMass"
+          subtitle="Be part of a community that builds innovative software solutions and develops professional skills"
+        />
       </div>
 
       {/* What We Look For Section */}
@@ -203,16 +135,16 @@ export default function Apply() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold font-montserrat text-gray-800 mb-4">
-              {applicationsOpen ? 'Available Positions' : 'Application Status'}
+              {APPLICATIONS_OPEN ? 'Available Positions' : 'Application Status'}
             </h2>
             <p className="text-xl text-gray-600 font-source-sans max-w-3xl mx-auto">
-              {applicationsOpen
+              {APPLICATIONS_OPEN
                 ? 'Join our team in one of these exciting roles. Applications are reviewed on a rolling basis.'
                 : 'Check back soon for our next recruitment cycle.'}
             </p>
           </div>
 
-          {applicationsOpen ? (
+          {APPLICATIONS_OPEN ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {roles.map((role, index) => (
                 <ApplicationCard
