@@ -1,0 +1,115 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Admin users for authentication
+model Admin {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  password  String   // Store bcrypt hash
+  role      String   @default("admin")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("admins")
+}
+
+// Waitlist members
+model WaitlistMember {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  createdAt DateTime @default(now())
+
+  @@map("waitlist_members")
+}
+
+// Software Developer applications
+model SoftwareDeveloper {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Section 1: Basic Information
+  fullName              String
+  email                 String   @unique
+  graduatingYear        Int
+  majors                String   // Comma-separated or JSON string
+  minors                String?  // Optional, comma-separated or JSON string
+  currentCourses        String?  // Optional
+  github                String?  // Optional
+  linkedIn              String?  // Optional
+  resumeLink            String
+  hoursPerWeek          Int      // 1-6
+  availability          String   // Days available (Mon-Fri) - store as JSON or comma-separated
+  previouslyApplied     Boolean
+  previousApplicationDate String? // When they applied before
+
+  // Section 2: Essays
+  whyBuild              String   // Max 300 words
+  projectExperience     String   // Max 500 words
+  technologyToLearn     String   // Max 250 words
+
+  // Section 3: Skills (Boolean for each)
+  skillJava             Boolean  @default(false)
+  skillJavaScript       Boolean  @default(false)
+  skillTypeScript       Boolean  @default(false)
+  skillPython           Boolean  @default(false)
+  skillHTML             Boolean  @default(false)
+  skillCSS              Boolean  @default(false)
+  skillExpressJS        Boolean  @default(false)
+  skillReactJS          Boolean  @default(false)
+  skillNodeJS           Boolean  @default(false)
+  skillSQL              Boolean  @default(false)
+  skillDjango           Boolean  @default(false)
+  skillMongoDB          Boolean  @default(false)
+  skillReactNative      Boolean  @default(false)
+  skillReact            Boolean  @default(false)
+  skillSwift            Boolean  @default(false)
+  skillJavaKotlin       Boolean  @default(false)
+  skillDartFlutter      Boolean  @default(false)
+
+  // Confidence levels (1-5)
+  confidenceGit         Int      // 1-5
+  confidenceCloud       Int      // 1-5 (GCP/Azure/AWS)
+  confidenceDatabase    Int      // 1-5 (Postgres, MySQL, etc.)
+
+  @@index([email])
+  @@index([graduatingYear])
+  @@map("software_developers")
+}
+
+// Product Manager applications
+model ProductManager {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Section 1: Basic Information
+  fullName              String
+  email                 String   @unique
+  graduatingYear        Int
+  majors                String   // Comma-separated or JSON string
+  minors                String?  // Optional
+  currentCourses        String?  // Optional
+  linkedIn              String?  // Optional
+  resumeLink            String
+  hoursPerWeek          Int      // 1-6
+  availability          String   // Days available (Mon-Fri)
+  previouslyApplied     Boolean
+  previousApplicationDate String? // When they applied before
+
+  // Section 2: Essays
+  whyBuild              String   // Why interested in BUILD
+  leadershipExperience  String   // Initiative/leadership example
+  excitingTechnology    String   // What excites them about tech/PM/design
+
+  @@index([email])
+  @@index([graduatingYear])
+  @@map("product_managers")
+}
