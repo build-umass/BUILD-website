@@ -18,6 +18,62 @@ export interface ProjectData {
 
 export const projects: ProjectData[] = [
   {
+    id: 18,
+    title: 'UMass Photo',
+    year: 2025,
+    description:
+      'Website for the UMass Photography for the e-board to manage membership, contests, photos, and blogs.',
+    image_url: '/images/projects/umassphoto_S25.png',
+    project_lead: [{ name: 'Maxwell Tang' }],
+    sdes: [
+      { name: 'Gordan Liu' },
+      { name: 'John Ngo' },
+      { name: 'Lance Cheng' },
+      { name: 'Nathan Gelfand' },
+      { name: 'Sue Gurung' },
+      { name: 'Zhiyang Wen' },
+    ],
+    product_managers: [{ name: 'Jashika Kaur' }, { name: 'Michael Doyle' }],
+    category: 'Web Development',
+  },
+  {
+    id: 17,
+    title: 'STEMPlore',
+    year: 2025,
+    description:
+      'STEMPlore is an innovative platform that gamifies the process of learning STEM topics. We are developing an AI-powered tool that converts uploaded educational curricula from slide-based formats into structured, question-ready content for the platform. We use LLMs to parse the curriculum and generate high-quality, usable questions. We are also working on modernizing the website’s UI and improving overall usability and quality-of-life features. STEMplore is an innovative educational tool developed by STEM For Others, designed to revolutionize STEM education. STEMplore offers a gamified learning experience that combines interactive lessons and engaging challenges. Our platform covers a wide range of science, technology, engineering, and mathematics (STEM) subjects, making learning fun and engaging for students of all ages. STEMPLORE helps students build critical thinking skills and a deep understanding of STEM concepts through an immersive and enjoyable approach. Join STEMPLORE today and discover how STEM For Others is transforming education one game at a time.',
+    image_url: '/images/projects/stemplore_S25.png',
+    project_lead: [{ name: 'Shreyas Pedda' }],
+    sdes: [
+      { name: 'Junaid Pathan' },
+      { name: 'Jennifer Ye' },
+      { name: 'Armaan Nahata' },
+      { name: 'Krish Arekar' },
+    ],
+    product_managers: [{ name: 'Urvi Gupta' }, { name: 'Duretti Hordofaa' }],
+    project_url: 'https://www.stemplore.com/',
+    category: 'Web Development',
+  },
+  {
+    id: 16,
+    title: 'Kapok',
+    year: 2025,
+    description:
+      'Kapok is a disaster response app designed to enhance the efficiency and coordination of first responders in disaster-stricken areas. It facilitates communication among response teams, helping to identify critical locations such as transportation barriers, sites where aid has been distributed, and areas where public health actions (such as the delivery of medicines or water purification demonstrations) have taken place. Additionally, Kapok creates a comprehensive record of these actions, boosting team morale and providing a clear picture of accomplishments in the field. Kapok is to be built in Flutter with the Dart programming language, and its main dependency is Flutterflow. Project requires intermediate understanding of Dart and Flutter, along with a basic understanding of asynchronous database development. The frontend is done, with functionality for navigation completed and some model classes and async functions in place to facilitate backend development.',
+    image_url: '/images/projects/kapok_S25.png',
+    project_lead: [{ name: 'Shreyansh Misra' }],
+    sdes: [
+      { name: 'Brian Nguyen' },
+      { name: 'Fuming Zhang' },
+      { name: 'Kiran Balasundaram Kuppuraj' },
+      { name: 'Dia Sutaria' },
+      { name: 'Duc Nghiem' },
+    ],
+    product_managers: [{ name: 'Shriya Sanas' }, { name: 'Nitya Vobugari' }],
+    project_url: 'https://github.com/ShreyanshMisra/Kapok',
+    category: 'Mobile Development',
+  },
+  {
     id: 15,
     title: 'Kindness Matters',
     year: 2025,
