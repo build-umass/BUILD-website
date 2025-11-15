@@ -56,7 +56,8 @@ export default function AdminDashboard() {
   const [showModal, setShowModal] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState<AdminData | null>(null);
-  const [applicationStatus, setApplicationStatus] = useState(false);
+  const [sdApplicationStatus, setSdApplicationStatus] = useState(false);
+  const [pmApplicationStatus, setPmApplicationStatus] = useState(false);
   const [activeTab, setActiveTab] = useState<'waitlist' | 'sd' | 'pm'>('waitlist');
 
   useEffect(() => {
@@ -84,7 +85,8 @@ export default function AdminDashboard() {
       const res = await fetch('/api/admin/status');
       if (res.ok) {
         const data = await res.json();
-        setApplicationStatus(data.isOpen);
+        setSdApplicationStatus(data.softwareDeveloper);
+        setPmApplicationStatus(data.productManager);
       }
     } catch (error) {
       console.error('Error fetching status:', error);
@@ -110,15 +112,20 @@ export default function AdminDashboard() {
     }
   };
 
-  const handleStatusToggle = async () => {
+  const handleStatusToggle = async (role: 'software_developer' | 'product_manager') => {
     try {
+      const currentStatus = role === 'software_developer' ? sdApplicationStatus : pmApplicationStatus;
       const res = await fetch('/api/admin/status', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ isOpen: !applicationStatus }),
+        body: JSON.stringify({ role, isOpen: !currentStatus }),
       });
       if (res.ok) {
-        setApplicationStatus(!applicationStatus);
+        if (role === 'software_developer') {
+          setSdApplicationStatus(!currentStatus);
+        } else {
+          setPmApplicationStatus(!currentStatus);
+        }
       }
     } catch (error) {
       console.error('Error updating status:', error);
@@ -190,27 +197,55 @@ export default function AdminDashboard() {
             </button>
           </div>
 
-          {/* Application Status Toggle */}
+          {/* Application Status Toggles */}
           <div className="bg-white border-2 border-build-red-600 rounded-lg p-6 mb-8 shadow-lg">
-            <div className="flex justify-between items-center">
+            <h2 className="text-xl font-bold text-gray-900 mb-4">Application Status</h2>
+            
+            {/* Software Developer Toggle */}
+            <div className="flex justify-between items-center mb-4 pb-4 border-b border-gray-200">
               <div>
-                <h2 className="text-xl font-bold text-gray-900 mb-2">Application Status</h2>
+                <h3 className="text-lg font-semibold text-gray-800 mb-1">Software Developer</h3>
                 <p className="text-gray-600">
                   Applications are currently{' '}
-                  <span className={applicationStatus ? 'text-green-600 font-bold' : 'text-red-600 font-bold'}>
-                    {applicationStatus ? 'OPEN' : 'CLOSED'}
+                  <span className={sdApplicationStatus ? 'text-green-600 font-bold' : 'text-red-600 font-bold'}>
+                    {sdApplicationStatus ? 'OPEN' : 'CLOSED'}
                   </span>
                 </p>
               </div>
               <button
-                onClick={handleStatusToggle}
+                onClick={() => handleStatusToggle('software_developer')}
                 className={`relative inline-flex h-12 w-24 items-center rounded-full transition-colors ${
-                  applicationStatus ? 'bg-green-500' : 'bg-gray-300'
+                  sdApplicationStatus ? 'bg-green-500' : 'bg-gray-300'
                 }`}
               >
                 <span
                   className={`inline-block h-10 w-10 transform rounded-full bg-white shadow-lg transition-transform ${
-                    applicationStatus ? 'translate-x-12' : 'translate-x-1'
+                    sdApplicationStatus ? 'translate-x-12' : 'translate-x-1'
+                  }`}
+                />
+              </button>
+            </div>
+
+            {/* Product Manager Toggle */}
+            <div className="flex justify-between items-center">
+              <div>
+                <h3 className="text-lg font-semibold text-gray-800 mb-1">Product Manager</h3>
+                <p className="text-gray-600">
+                  Applications are currently{' '}
+                  <span className={pmApplicationStatus ? 'text-green-600 font-bold' : 'text-red-600 font-bold'}>
+                    {pmApplicationStatus ? 'OPEN' : 'CLOSED'}
+                  </span>
+                </p>
+              </div>
+              <button
+                onClick={() => handleStatusToggle('product_manager')}
+                className={`relative inline-flex h-12 w-24 items-center rounded-full transition-colors ${
+                  pmApplicationStatus ? 'bg-green-500' : 'bg-gray-300'
+                }`}
+              >
+                <span
+                  className={`inline-block h-10 w-10 transform rounded-full bg-white shadow-lg transition-transform ${
+                    pmApplicationStatus ? 'translate-x-12' : 'translate-x-1'
                   }`}
                 />
               </button>
@@ -230,7 +265,7 @@ export default function AdminDashboard() {
               >
                 Waitlist ({data?.waitlist.length || 0})
               </button>
-              {applicationStatus && (
+              {(sdApplicationStatus || pmApplicationStatus) && (
                 <>
                   <button
                     onClick={() => setActiveTab('sd')}
@@ -286,7 +321,7 @@ export default function AdminDashboard() {
             )}
 
             {/* Software Developers Tab */}
-            {activeTab === 'sd' && applicationStatus && (
+            {activeTab === 'sd' && sdApplicationStatus && (
               <div className="p-6 space-y-6">
                 {data?.softwareDevelopers.map((dev) => (
                   <div key={dev.id} className="border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
@@ -357,7 +392,7 @@ export default function AdminDashboard() {
             )}
 
             {/* Product Managers Tab */}
-            {activeTab === 'pm' && applicationStatus && (
+            {activeTab === 'pm' && pmApplicationStatus && (
               <div className="p-6 space-y-6">
                 {data?.productManagers.map((pm) => (
                   <div key={pm.id} className="border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">

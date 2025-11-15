@@ -113,3 +113,13 @@ model ProductManager {
   @@index([graduatingYear])
   @@map("product_managers")
 }
+
+// Application status for controlling application availability
+model ApplicationStatus {
+  id        Int      @id @default(autoincrement())
+  role      String   @unique // "software_developer" or "product_manager"
+  isOpen    Int      @default(0) // 0 = closed, 1 = open
+  updatedAt DateTime @updatedAt
+
+  @@map("application_status")
+}

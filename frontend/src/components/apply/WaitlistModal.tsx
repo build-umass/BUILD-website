@@ -14,17 +14,32 @@ export default function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would handle the actual submission to your backend
-    console.log('Waitlist submission:', { name, email });
-    setIsSubmitted(true);
-
-    // Reset after 2 seconds and close
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setName('');
-      setEmail('');
-      onClose();
-    }, 2000);
+    
+    // Submit to backend
+    fetch('/api/waitlist/join', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email }),
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          setIsSubmitted(true);
+          setTimeout(() => {
+            setIsSubmitted(false);
+            setName('');
+            setEmail('');
+            onClose();
+          }, 2000);
+        } else {
+          console.error('Error joining waitlist:', data.error);
+          alert(data.error || 'Failed to join waitlist');
+        }
+      })
+      .catch(error => {
+        console.error('Error joining waitlist:', error);
+        alert('Failed to join waitlist. Please try again.');
+      });
   };
 
   return (
