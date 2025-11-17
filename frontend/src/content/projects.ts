@@ -74,24 +74,6 @@ export const projects: ProjectData[] = [
     category: 'Mobile Development',
   },
   {
-    id: 15,
-    title: 'Kindness Matters',
-    year: 2025,
-    description:
-      'Kindness Matters is an educator-focused extension of an existing Learning Management System (LMS), introducing a content marketplace where teachers and tutors can create, package, and sell learning materials at a chapter or lesson level. The platform supports content publishing, discovery, previews, and secure peer-to-peer payments, enabling flexible monetization while making resources more accessible for other instructors.',
-    image_url: '/images/projects/KindnessMatter.png',
-    project_lead: [{ name: 'Mishti Gala' }],
-    sdes: [
-      { name: 'Rudra Darpan Patel' },
-      { name: 'Charlie Desmond' },
-      { name: 'Fuming Zhang' },
-      { name: 'Shivansh Soni' },
-    ],
-    product_managers: [{ name: 'Supriyaa Hejib' }],
-    project_url: 'https://kindnessmattersinc.com',
-    category: 'Web Development',
-  },
-  {
     id: 1,
     title: 'EliteCode',
     year: 2024,
