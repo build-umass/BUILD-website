@@ -27,27 +27,31 @@ export default function ProductManagerApplication() {
 
   useEffect(() => {
     fetch('/api/applications/status')
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         setIsOpen(data.productManager);
         setIsLoading(false);
         if (!data.productManager) {
           setTimeout(() => router.push('/apply'), 2000);
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Error fetching status:', error);
         setIsLoading(false);
       });
   }, [router]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     const { name, value, type } = e.target;
     if (type === 'checkbox') {
       const checked = (e.target as HTMLInputElement).checked;
-      setFormData(prev => ({ ...prev, [name]: checked }));
+      setFormData((prev) => ({ ...prev, [name]: checked }));
     } else {
-      setFormData(prev => ({ ...prev, [name]: value }));
+      setFormData((prev) => ({ ...prev, [name]: value }));
     }
   };
 
@@ -90,8 +94,12 @@ export default function ProductManagerApplication() {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-3xl font-bold text-gray-800 mb-4">Applications Closed</h1>
-          <p className="text-gray-600 mb-4">Product Manager applications are currently closed.</p>
+          <h1 className="text-3xl font-bold text-gray-800 mb-4">
+            Applications Closed
+          </h1>
+          <p className="text-gray-600 mb-4">
+            Product Manager applications are currently closed.
+          </p>
           <p className="text-gray-500">Redirecting to applications page...</p>
         </div>
       </div>
@@ -114,15 +122,15 @@ export default function ProductManagerApplication() {
           <h1 className="text-5xl font-bold text-white mb-4 font-montserrat">
             Product Manager Application
           </h1>
-          <p className="text-xl text-white/90 font-source-sans">
-            Join BUILD UMass as a Product Manager
-          </p>
         </div>
       </div>
 
       {/* Form Section */}
       <div className="container mx-auto px-4 py-12 max-w-4xl">
-        <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-lg p-8">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white rounded-lg shadow-lg p-8"
+        >
           {/* Section 1: Basic Information */}
           <div className="mb-8">
             <h2 className="text-2xl font-bold text-build-red-600 mb-6 font-montserrat">
@@ -168,7 +176,7 @@ export default function ProductManagerApplication() {
                   value={formData.graduatingYear}
                   onChange={handleChange}
                   required
-                  min="2024"
+                  min="2026"
                   max="2030"
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-build-red-600 focus:border-transparent"
                 />
@@ -198,7 +206,6 @@ export default function ProductManagerApplication() {
                   name="minors"
                   value={formData.minors}
                   onChange={handleChange}
-                  placeholder="Optional"
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-build-red-600 focus:border-transparent"
                 />
               </div>
@@ -212,7 +219,6 @@ export default function ProductManagerApplication() {
                   name="currentCourses"
                   value={formData.currentCourses}
                   onChange={handleChange}
-                  placeholder="Optional"
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-build-red-600 focus:border-transparent"
                 />
               </div>
@@ -291,7 +297,9 @@ export default function ProductManagerApplication() {
                     onChange={handleChange}
                     className="mr-2"
                   />
-                  <span className="text-sm text-gray-700">I have previously applied to BUILD</span>
+                  <span className="text-sm text-gray-700">
+                    I have previously applied to BUILD
+                  </span>
                 </label>
               </div>
 
@@ -350,7 +358,8 @@ export default function ProductManagerApplication() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  What excites you about technology, product management, or design? *
+                  What excites you about technology, product management, or
+                  design? *
                 </label>
                 <textarea
                   name="excitingTechnology"

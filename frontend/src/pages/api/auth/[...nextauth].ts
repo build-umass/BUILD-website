@@ -1,35 +1,34 @@
-import NextAuth, { NextAuthOptions } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
+import NextAuth, { NextAuthOptions } from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
 
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
-      name: "Credentials",
+      name: 'Credentials',
       credentials: {
-        password: { label: "Password", type: "password" },
+        password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        // Hard-coded password check - replace with your Slack password
-        const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "build2025";
-        
+        const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
+
         if (credentials?.password === ADMIN_PASSWORD) {
           return {
-            id: "admin",
-            name: "Admin",
-            email: "admin@buildumass.com",
+            id: 'admin',
+            name: 'Admin',
+            email: 'admin@buildumass.com',
           };
         }
-        
+
         return null;
       },
     }),
   ],
   session: {
-    strategy: "jwt",
+    strategy: 'jwt',
     maxAge: 60 * 60, // 1 hour
   },
   pages: {
-    signIn: "/admin",
+    signIn: '/admin',
   },
   callbacks: {
     async jwt({ token, user }) {
