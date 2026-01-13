@@ -1,6 +1,5 @@
-'use client';
-
 import React from 'react';
+import { useRouter } from 'next/router';
 import styles from './ApplicationCard.module.css';
 
 interface ApplicationCardProps {
@@ -16,10 +15,10 @@ export default function ApplicationCard({
   applicationLink,
   applicationOpen,
 }: ApplicationCardProps) {
+  const router = useRouter();
+
   const handleApply = () => {
-    if (typeof window !== 'undefined') {
-      window.open(applicationLink, '_blank');
-    }
+    router.push(applicationLink);
   };
 
   return (

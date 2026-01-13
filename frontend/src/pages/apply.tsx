@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import JumbotronHeader from '../components/JumbotronHeader';
 import ApplicationCard from '../components/apply/ApplicationCard';
@@ -12,27 +12,41 @@ interface FAQ {
 }
 
 export default function Apply() {
-  // CHANGE THIS VARIABLE TO CONTROL APPLICATION STATUS
-  const APPLICATIONS_OPEN = false; // Set to true to show role cards, false to show closed card
-
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
   const [isWaitlistModalOpen, setIsWaitlistModalOpen] = useState(false);
+  const [sdApplicationsOpen, setSdApplicationsOpen] = useState(false);
+  const [pmApplicationsOpen, setPmApplicationsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Sample role data - in a real app, this would come from an API
+  // Fetch application status from database
+  useEffect(() => {
+    fetch('/api/applications/status')
+      .then(res => res.json())
+      .then(data => {
+        setSdApplicationsOpen(data.softwareDeveloper);
+        setPmApplicationsOpen(data.productManager);
+        setIsLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching application status:', error);
+        setIsLoading(false);
+      });
+  }, []);
+
   const roles = [
     {
       title: 'Software Developer',
       description:
         'Work on real-world projects using modern technologies like React, Node.js, and Python. Gain experience in full-stack development, API design, and database management.',
-      applicationLink: '',
-      applicationOpen: true,
+      applicationLink: '/apply/software-developer',
+      applicationOpen: sdApplicationsOpen,
     },
     {
       title: 'Product Manager',
       description:
         'Lead project planning, coordinate with clients, and ensure successful project delivery. Develop skills in project management, client communication, and strategic thinking.',
-      applicationLink: '',
-      applicationOpen: true,
+      applicationLink: '/apply/product-manager',
+      applicationOpen: pmApplicationsOpen,
     },
   ];
 
@@ -135,18 +149,22 @@ export default function Apply() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold font-montserrat text-gray-800 mb-4">
-              {APPLICATIONS_OPEN ? 'Available Positions' : 'Application Status'}
+              {(sdApplicationsOpen || pmApplicationsOpen) ? 'Available Positions' : 'Application Status'}
             </h2>
             <p className="text-xl text-gray-600 font-source-sans max-w-3xl mx-auto">
-              {APPLICATIONS_OPEN
+              {(sdApplicationsOpen || pmApplicationsOpen)
                 ? 'Join our team in one of these exciting roles. Applications are reviewed on a rolling basis.'
                 : 'Check back soon for our next recruitment cycle.'}
             </p>
           </div>
 
-          {APPLICATIONS_OPEN ? (
+          {isLoading ? (
+            <div className="text-center py-12">
+              <p className="text-gray-600">Loading...</p>
+            </div>
+          ) : (sdApplicationsOpen || pmApplicationsOpen) ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {roles.map((role, index) => (
+              {roles.filter(role => role.applicationOpen).map((role, index) => (
                 <ApplicationCard
                   key={index}
                   title={role.title}
