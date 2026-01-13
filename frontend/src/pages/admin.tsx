@@ -121,11 +121,20 @@ export default function AdminDashboard() {
         body: JSON.stringify({ role, isOpen: !currentStatus }),
       });
       if (res.ok) {
+        const data = await res.json();
         if (role === 'software_developer') {
-          setSdApplicationStatus(!currentStatus);
+          setSdApplicationStatus(data.isOpen);
+          if (data.isOpen) {
+            setActiveTab('sd');
+          }
         } else {
-          setPmApplicationStatus(!currentStatus);
+          setPmApplicationStatus(data.isOpen);
+          if (data.isOpen) {
+            setActiveTab('pm');
+          }
         }
+        // Refresh data to show applications
+        fetchData();
       }
     } catch (error) {
       console.error('Error updating status:', error);

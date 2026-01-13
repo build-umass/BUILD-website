@@ -23,22 +23,9 @@ export default async function handler(
         where: { role: "product_manager" },
       });
 
-      // Initialize if not exists
-      if (!sdStatus) {
-        await prisma.applicationStatus.create({
-          data: { role: "software_developer", isOpen: 0 },
-        });
-      }
-
-      if (!pmStatus) {
-        await prisma.applicationStatus.create({
-          data: { role: "product_manager", isOpen: 0 },
-        });
-      }
-
       return res.status(200).json({
-        softwareDeveloper: sdStatus?.isOpen === 1,
-        productManager: pmStatus?.isOpen === 1,
+        softwareDeveloper: sdStatus ? sdStatus.isOpen === 1 : false,
+        productManager: pmStatus ? pmStatus.isOpen === 1 : false,
       });
     } catch (error) {
       console.error("Error fetching status:", error);
@@ -50,7 +37,7 @@ export default async function handler(
     try {
       const { role, isOpen } = req.body;
 
-      if (!role || (isOpen !== true && isOpen !== false)) {
+      if (!role || typeof isOpen !== "boolean") {
         return res.status(400).json({ error: "Invalid request body" });
       }
 
@@ -59,13 +46,13 @@ export default async function handler(
         return res.status(400).json({ error: "Invalid role" });
       }
 
-      await prisma.applicationStatus.upsert({
+      const updated = await prisma.applicationStatus.upsert({
         where: { role },
         update: { isOpen: isOpen ? 1 : 0 },
         create: { role, isOpen: isOpen ? 1 : 0 },
       });
 
-      return res.status(200).json({ success: true });
+      return res.status(200).json({ success: true, isOpen: updated.isOpen === 1 });
     } catch (error) {
       console.error("Error updating status:", error);
       return res.status(500).json({ error: "Failed to update status" });

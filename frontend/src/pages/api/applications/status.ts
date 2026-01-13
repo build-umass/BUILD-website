@@ -7,31 +7,30 @@ export default async function handler(
 ) {
   if (req.method === "GET") {
     try {
-      // Fetch both application statuses
-      const sdStatus = await prisma.applicationStatus.findUnique({
+      let sdStatus = await prisma.applicationStatus.findUnique({
         where: { role: "software_developer" },
       });
 
-      const pmStatus = await prisma.applicationStatus.findUnique({
+      let pmStatus = await prisma.applicationStatus.findUnique({
         where: { role: "product_manager" },
       });
 
       // If not found, create default closed status
       if (!sdStatus) {
-        await prisma.applicationStatus.create({
+        sdStatus = await prisma.applicationStatus.create({
           data: { role: "software_developer", isOpen: 0 },
         });
       }
 
       if (!pmStatus) {
-        await prisma.applicationStatus.create({
+        pmStatus = await prisma.applicationStatus.create({
           data: { role: "product_manager", isOpen: 0 },
         });
       }
 
       return res.status(200).json({
-        softwareDeveloper: sdStatus?.isOpen === 1,
-        productManager: pmStatus?.isOpen === 1,
+        softwareDeveloper: sdStatus.isOpen === 1,
+        productManager: pmStatus.isOpen === 1,
       });
     } catch (error) {
       console.error("Error fetching application status:", error);
