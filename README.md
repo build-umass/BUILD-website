@@ -28,7 +28,6 @@ BUILD-website/
 │   │   ├── components/          # React components
 │   │   │   ├── apply/           # Application-related components
 │   │   │   └── ui/              # Shared UI components
-│   │   ├── lib/                 # Utilities and configurations
 │   │   └── pages/               # Next.js pages
 │   │       ├── api/             # API routes
 │   │       │   ├── admin/       # Admin endpoints (data, status, delete)
