@@ -11,39 +11,49 @@ The official website for BUILD UMass - a student organization that builds softwa
   - View all waitlist members, SD applications, and PM applications
   - Delete individual records or bulk delete all records
   - View if applicants have previously applied
+- **Contact Form**: Email contact form powered by Resend
 
 ## Tech Stack
 
-- **Frontend**: Next.js 15 (Pages Router), TypeScript, Tailwind CSS
-- **Database**: PostgreSQL via Prisma Cloud
+- **Framework**: Next.js 15 (Pages Router), TypeScript
+- **Styling**: Tailwind CSS
+- **Database**: PostgreSQL via Prisma
 - **ORM**: Prisma
 - **Authentication**: NextAuth.js (Credentials provider)
+- **Email**: Resend API
 
 ## Project Structure
 
 ```
 BUILD-website/
-├── frontend/                    # Next.js application
-│   ├── src/
-│   │   ├── components/          # React components
-│   │   │   ├── apply/           # Application-related components
-│   │   │   └── ui/              # Shared UI components
-│   │   └── pages/               # Next.js pages
-│   │       ├── api/             # API routes
-│   │       │   ├── admin/       # Admin endpoints (data, status, delete)
-│   │       │   ├── applications/# Application submission endpoints
-│   │       │   ├── auth/        # NextAuth configuration
-│   │       │   └── waitlist/    # Waitlist endpoints
-│   │       ├── apply/           # Application form pages
-│   │       └── admin.tsx        # Admin dashboard
-├── backend/
-│   └── app/
-│       └── db/
-│           ├── prisma.ts        # Prisma client
-│           └── schemas/
-│               └── schema.prisma # Database schema
-├── .env                         # Environment variables
-└── package.json                 # Workspace configuration
+├── src/
+│   ├── components/          # React components
+│   │   ├── apply/           # Application-related components
+│   │   ├── nav/             # Navigation components
+│   │   └── ui/              # Shared UI components
+│   ├── content/             # Static content data
+│   ├── hooks/               # Custom React hooks
+│   ├── layouts/             # Page layouts
+│   ├── pages/               # Next.js pages
+│   │   ├── api/             # API routes
+│   │   │   ├── admin/       # Admin endpoints (data, status, delete)
+│   │   │   ├── applications/# Application submission endpoints
+│   │   │   ├── auth/        # NextAuth configuration
+│   │   │   ├── waitlist/    # Waitlist endpoints
+│   │   │   └── send-email.ts# Contact form email endpoint
+│   │   ├── apply/           # Application form pages
+│   │   └── admin.tsx        # Admin dashboard
+│   └── styles/              # Global styles
+├── database/
+│   └── db/
+│       ├── prisma.ts        # Prisma client
+│       ├── models/          # Database model utilities
+│       └── schemas/
+│           └── schema.prisma # Database schema
+├── public/                  # Static assets
+├── .env.local               # Environment variables (not committed)
+├── tailwind.config.ts       # Tailwind configuration
+└── package.json             # Dependencies and scripts
 ```
 
 ## Quick Start
@@ -61,29 +71,33 @@ npm install
 
 ### 2. Configure Environment Variables
 
-Create a `.env` file in the root directory:
+Create a `.env.local` file in the root directory:
 
 ```env
-# Database - Prisma Cloud PostgreSQL connection string
-DATABASE_URL="postgres://[user]:[password]@db.prisma.io:5432/postgres?sslmode=require"
+# Database - PostgreSQL connection string
+DATABASE_URL="postgres://[user]:[password]@[host]:5432/postgres?sslmode=require"
 
 # Admin password for dashboard access
 ADMIN_PASSWORD=your-secure-password
 
 # NextAuth secret - generate with: openssl rand -base64 32
 NEXTAUTH_SECRET=your-generated-secret
+
+# Email (Resend)
+RESEND_API_KEY=your-resend-api-key
+PERSONAL_EMAIL=your-email@example.com
 ```
 
 ### 3. Generate Prisma Client
 
 ```bash
-npm run prisma:generate
+npx prisma generate
 ```
 
 ### 4. Push Database Schema
 
 ```bash
-npm run prisma:push
+npx prisma db push
 ```
 
 ### 5. Start Development Server
@@ -98,14 +112,16 @@ The site will be available at `http://localhost:3000`
 
 ```bash
 npm run dev              # Start development server
+npm run build            # Build for production
+npm run start            # Start production server
 npm run lint             # Run ESLint
 npm run format           # Format code with Prettier
 
 # Prisma commands
-npm run prisma:generate  # Generate Prisma client
-npm run prisma:push      # Push schema to database
-npm run prisma:migrate   # Run database migrations
-npm run prisma:studio    # Open Prisma Studio (database GUI)
+npx prisma generate      # Generate Prisma client
+npx prisma db push       # Push schema to database
+npx prisma migrate dev   # Run database migrations
+npx prisma studio        # Open Prisma Studio (database GUI)
 ```
 
 ## Database Schema
@@ -130,6 +146,7 @@ npm run prisma:studio    # Open Prisma Studio (database GUI)
 | POST | `/api/applications/software-developer` | Submit SD application |
 | POST | `/api/applications/product-manager` | Submit PM application |
 | POST | `/api/waitlist/join` | Join the waitlist |
+| POST | `/api/send-email` | Send contact form email |
 
 ### Protected Admin Endpoints
 
@@ -158,9 +175,11 @@ Access the admin dashboard at `/admin`. Features include:
 
 | Variable | Description |
 |----------|-------------|
-| `DATABASE_URL` | PostgreSQL connection string (Prisma Cloud) |
+| `DATABASE_URL` | PostgreSQL connection string |
 | `ADMIN_PASSWORD` | Password for admin dashboard access |
 | `NEXTAUTH_SECRET` | Secret for NextAuth session encryption |
+| `RESEND_API_KEY` | API key for Resend email service |
+| `PERSONAL_EMAIL` | Email address to receive contact form submissions |
 
 ## Styling
 
@@ -170,12 +189,19 @@ The website uses BUILD UMass brand guidelines:
 - **Primary Color**: BUILD Red (`#dc2626`)
 - **Design**: Clean, modern interface with Tailwind CSS
 
-## Deployment
+## Deployment (Vercel)
 
-For production deployment:
+1. Connect your repository to Vercel
+2. Set environment variables in Vercel project settings:
+   - `DATABASE_URL`
+   - `ADMIN_PASSWORD`
+   - `NEXTAUTH_SECRET`
+   - `RESEND_API_KEY`
+   - `PERSONAL_EMAIL`
+3. Deploy - Vercel will automatically build and deploy
 
-1. Set environment variables on your hosting platform
-2. Ensure `DATABASE_URL` points to your production database
-3. Generate a secure `NEXTAUTH_SECRET`
-4. Build the application: `npm run build -w frontend`
-5. Start the production server: `npm run start -w frontend`
+For manual deployment:
+```bash
+npm run build
+npm run start
+```

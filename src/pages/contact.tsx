@@ -15,6 +15,7 @@ export default function Contact() {
   const [submitStatus, setSubmitStatus] = useState<
     'idle' | 'success' | 'error'
   >('idle');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleInputChange = (
     e: React.ChangeEvent<
@@ -28,23 +29,90 @@ export default function Contact() {
     }));
   };
 
+  const isValidEmail = (email: string): boolean => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
 
-    // Simulate form submission
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      setSubmitStatus('success');
-      setFormData({
-        name: '',
-        email: '',
-        organization: '',
-        subject: '',
-        message: '',
-      });
-    } catch (error) {
+    if (!isValidEmail(formData.email)) {
       setSubmitStatus('error');
+      setErrorMessage('Please enter a valid email address.');
+      return;
+    }
+  
+    if (formData.name.trim().length < 2) {
+      setSubmitStatus('error');
+      setErrorMessage('Please enter your full name.');
+      return;
+    }
+    
+    if (formData.message.trim().length < 10) {
+      setSubmitStatus('error');
+      setErrorMessage('Please provide a more detailed message (at least 10 characters).');
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+    setErrorMessage('');
+
+    try {
+      // Send data to Next.js API route
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        // Reset form on success
+        setFormData({
+          name: '',
+          email: '',
+          organization: '',
+          subject: '',
+          message: '',
+        });
+
+        // Auto-hide success message after 5 seconds
+        setTimeout(() => {
+          setSubmitStatus('idle');
+        }, 5000);
+      } else {
+        setSubmitStatus('error');
+        setErrorMessage(
+          data.detail || 'Failed to send message. Please try again.'
+        );
+        
+        // Handle Pydantic validation errors (they come as an array)
+      if (data.detail && Array.isArray(data.detail)) {
+        // Extract error messages from Pydantic validation errors
+        const errorMessages = data.detail
+          .map((err: any) => err.msg || 'Validation error')
+          .join('. ');
+        setErrorMessage(errorMessages);
+      } else if (typeof data.detail === 'string') {
+        // Simple string error from your backend
+        setErrorMessage(data.detail);
+      } else {
+        // Fallback error message
+        setErrorMessage('Failed to send message. Please check your input and try again.');
+      }
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSubmitStatus('error');
+      setErrorMessage(
+        'Network error. Please check your connection and try again.'
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -86,14 +154,13 @@ export default function Contact() {
 
               {submitStatus === 'success' && (
                 <div className="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
-                  Thank you for your message! We'll get back to you soon.
+                  ✓ Thank you for your message! We'll get back to you soon.
                 </div>
               )}
 
               {submitStatus === 'error' && (
                 <div className="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
-                  Sorry, there was an error sending your message. Please try
-                  again.
+                  ✗ {errorMessage || 'Sorry, there was an error sending your message. Please try again.'}
                 </div>
               )}
 
@@ -113,7 +180,8 @@ export default function Contact() {
                       value={formData.name}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 font-source-sans"
+                      disabled={isSubmitting}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 font-source-sans disabled:bg-gray-100 disabled:cursor-not-allowed"
                       placeholder="Your full name"
                     />
                   </div>
@@ -131,7 +199,8 @@ export default function Contact() {
                       value={formData.email}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 font-source-sans"
+                      disabled={isSubmitting}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 font-source-sans disabled:bg-gray-100 disabled:cursor-not-allowed"
                       placeholder="your.email@example.com"
                     />
                   </div>
@@ -150,7 +219,8 @@ export default function Contact() {
                     name="organization"
                     value={formData.organization}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 font-source-sans"
+                    disabled={isSubmitting}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 font-source-sans disabled:bg-gray-100 disabled:cursor-not-allowed"
                     placeholder="Your organization or company"
                   />
                 </div>
@@ -168,13 +238,14 @@ export default function Contact() {
                     value={formData.subject}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 font-source-sans"
+                    disabled={isSubmitting}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 font-source-sans disabled:bg-gray-100 disabled:cursor-not-allowed"
                   >
                     <option value="">Select a subject</option>
                     <option value="project-inquiry">Project Inquiry</option>
                     <option value="partnership">Partnership</option>
                     <option value="recruitment">Recruitment</option>
-                    <option value="general">General Question</option>
+                    <option value="general">General Inquiry</option>
                     <option value="other">Other</option>
                   </select>
                 </div>
@@ -192,18 +263,45 @@ export default function Contact() {
                     value={formData.message}
                     onChange={handleInputChange}
                     required
+                    disabled={isSubmitting}
                     rows={6}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 font-source-sans resize-vertical"
-                    placeholder="Tell us about your project, questions, or how we can help you..."
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 font-source-sans disabled:bg-gray-100 disabled:cursor-not-allowed"
+                    placeholder="Tell us about your project or question..."
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-red-600 text-white font-montserrat font-bold py-3 px-8 rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full bg-red-600 text-white px-8 py-4 rounded-lg font-montserrat font-bold hover:bg-red-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center"
                 >
-                  {isSubmitting ? 'Sending...' : 'Send Message'}
+                  {isSubmitting ? (
+                    <>
+                      <svg
+                        className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
+                      </svg>
+                      Sending...
+                    </>
+                  ) : (
+                    'Send Message'
+                  )}
                 </button>
               </form>
             </div>
@@ -214,8 +312,8 @@ export default function Contact() {
                 Get in Touch
               </h2>
               <p className="text-lg text-gray-600 font-source-sans mb-8">
-                Prefer to reach out directly? Here are other ways to connect
-                with us.
+                We're here to help bring your ideas to life. Reach out through
+                the form or connect with us directly through the channels below.
               </p>
 
               <div className="space-y-6">
@@ -231,7 +329,7 @@ export default function Contact() {
                         strokeLinecap="round"
                         strokeLinejoin="round"
                         strokeWidth={2}
-                        d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                       />
                     </svg>
                   </div>
@@ -239,14 +337,12 @@ export default function Contact() {
                     <h3 className="text-lg font-bold font-montserrat text-gray-800 mb-1">
                       Email
                     </h3>
-                    <p className="text-gray-600 font-source-sans">
-                      <a
-                        href="mailto:build.umass@gmail.com"
-                        className="hover:text-red-600 transition-colors"
-                      >
-                        build.umass@gmail.com
-                      </a>
-                    </p>
+                    <a
+                      href="mailto:jonliu@umass.edu"
+                      className="text-red-600 font-source-sans hover:text-red-700"
+                    >
+                      contact@buildumass.com
+                    </a>
                   </div>
                 </div>
 
