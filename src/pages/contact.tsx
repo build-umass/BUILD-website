@@ -2,9 +2,6 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import JumbotronHeader from '../components/JumbotronHeader';
 
-// Configuration - Update this with your backend URL
-const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000';
-
 export default function Contact() {
   const [formData, setFormData] = useState({
     name: '',
@@ -63,8 +60,8 @@ export default function Contact() {
     setErrorMessage('');
 
     try {
-      // Send data to FastAPI backend
-      const response = await fetch(`${API_URL}/api/send-email`, {
+      // Send data to Next.js API route
+      const response = await fetch('/api/send-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

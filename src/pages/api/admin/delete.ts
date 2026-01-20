@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '../auth/[...nextauth]';
-import { prisma } from '../../../../../backend/app/db/prisma';
+import { prisma } from '../../../../database/db/prisma';
 
 export default async function handler(
   req: NextApiRequest,
@@ -35,12 +35,16 @@ export default async function handler(
         } else if (type === 'product_manager') {
           await prisma.productManager.deleteMany({});
         }
-        return res.status(200).json({ success: true, message: `All ${type} records deleted` });
+        return res
+          .status(200)
+          .json({ success: true, message: `All ${type} records deleted` });
       }
 
       // Delete single record
       if (!id) {
-        return res.status(400).json({ error: 'ID is required for single delete' });
+        return res
+          .status(400)
+          .json({ error: 'ID is required for single delete' });
       }
 
       if (type === 'waitlist') {
