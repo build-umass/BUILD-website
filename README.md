@@ -1,210 +1,207 @@
-# BUILD Finder
+# BUILD UMass Website
 
-A monorepo for finding and connecting with builders, featuring a Next.js frontend and FastAPI backend.
+The official website for BUILD UMass - a student organization that builds software for nonprofits and local businesses.
 
-## Architecture
+## Features
 
-- **Frontend**: Next.js with TypeScript, Tailwind CSS, TanStack Query, Zustand, and Supabase integration
-- **Backend**: FastAPI with SQLAlchemy 2.x, Alembic, Redis/RQ, and async PostgreSQL
-- **Database**: PostgreSQL (local via Docker or Supabase hosted)
-- **Queue**: Redis with RQ for background jobs
-- **Deployment**: Docker Compose for local development
+- **Application System**: Software Developer and Product Manager application forms
+- **Waitlist**: Email signup for interested members when applications are closed
+- **Admin Dashboard**: Password-protected dashboard for managing applications
+  - Toggle applications open/closed for each role
+  - View all waitlist members, SD applications, and PM applications
+  - Delete individual records or bulk delete all records
+  - View if applicants have previously applied
+- **Contact Form**: Email contact form powered by Resend
+
+## Tech Stack
+
+- **Framework**: Next.js 15 (Pages Router), TypeScript
+- **Styling**: Tailwind CSS
+- **Database**: PostgreSQL via Prisma
+- **ORM**: Prisma
+- **Authentication**: NextAuth.js (Credentials provider)
+- **Email**: Resend API
+
+## Project Structure
+
+```
+BUILD-website/
+├── src/
+│   ├── components/          # React components
+│   │   ├── apply/           # Application-related components
+│   │   ├── nav/             # Navigation components
+│   │   └── ui/              # Shared UI components
+│   ├── content/             # Static content data
+│   ├── hooks/               # Custom React hooks
+│   ├── layouts/             # Page layouts
+│   ├── pages/               # Next.js pages
+│   │   ├── api/             # API routes
+│   │   │   ├── admin/       # Admin endpoints (data, status, delete)
+│   │   │   ├── applications/# Application submission endpoints
+│   │   │   ├── auth/        # NextAuth configuration
+│   │   │   ├── waitlist/    # Waitlist endpoints
+│   │   │   └── send-email.ts# Contact form email endpoint
+│   │   ├── apply/           # Application form pages
+│   │   └── admin.tsx        # Admin dashboard
+│   └── styles/              # Global styles
+├── database/
+│   └── db/
+│       ├── prisma.ts        # Prisma client
+│       ├── models/          # Database model utilities
+│       └── schemas/
+│           └── schema.prisma # Database schema
+├── public/                  # Static assets
+├── .env.local               # Environment variables (not committed)
+├── tailwind.config.ts       # Tailwind configuration
+└── package.json             # Dependencies and scripts
+```
 
 ## Quick Start
 
 ### Prerequisites
 
 - Node.js 18+
-- Python 3.12+
-- Docker and Docker Compose
+- npm
 
-### 1. Start Infrastructure Services
-
-```bash
-# Start PostgreSQL and Redis
-docker compose up -d postgres redis
-```
-
-### 2. Backend Setup
+### 1. Install Dependencies
 
 ```bash
-cd backend
-
-# Install dependencies
-pip install -e ".[dev]"
-
-# Copy environment file
-cp .env.example .env
-
-# Start the API server
-uvicorn app.main:app --reload
-```
-
-### 3. Frontend Setup
-
-```bash
-# Install dependencies (from root)
 npm install
-
-# Start the frontend
-npm run dev -w frontend
 ```
 
-### 4. Start Background Workers (Optional)
+### 2. Configure Environment Variables
+
+Create a `.env.local` file in the root directory:
+
+```env
+# Database - PostgreSQL connection string
+DATABASE_URL="postgres://[user]:[password]@[host]:5432/postgres?sslmode=require"
+
+# Admin password for dashboard access
+ADMIN_PASSWORD=your-secure-password
+
+# NextAuth secret - generate with: openssl rand -base64 32
+NEXTAUTH_SECRET=your-generated-secret
+
+# Email (Resend)
+RESEND_API_KEY=your-resend-api-key
+PERSONAL_EMAIL=your-email@example.com
+```
+
+### 3. Generate Prisma Client
 
 ```bash
-cd backend
-rq worker default --url redis://localhost:6379/0
+npx prisma generate
 ```
+
+### 4. Push Database Schema
+
+```bash
+npx prisma db push
+```
+
+### 5. Start Development Server
+
+```bash
+npm run dev
+```
+
+The site will be available at `http://localhost:3000`
 
 ## Development Commands
 
-### Root Level
-
 ```bash
-npm run dev          # Start frontend
-npm run lint         # Lint frontend
-npm run format       # Format frontend code
+npm run dev              # Start development server
+npm run build            # Build for production
+npm run start            # Start production server
+npm run lint             # Run ESLint
+npm run format           # Format code with Prettier
+
+# Prisma commands
+npx prisma generate      # Generate Prisma client
+npx prisma db push       # Push schema to database
+npx prisma migrate dev   # Run database migrations
+npx prisma studio        # Open Prisma Studio (database GUI)
 ```
 
-### Backend
+## Database Schema
 
+### Tables
+
+| Table | Description |
+|-------|-------------|
+| `waitlist_members` | Email signups for the waitlist |
+| `software_developers` | Software Developer applications |
+| `product_managers` | Product Manager applications |
+| `application_status` | Controls if applications are open/closed |
+| `admins` | Admin users (for future use) |
+
+## API Routes
+
+### Public Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/applications/status` | Get application open/closed status |
+| POST | `/api/applications/software-developer` | Submit SD application |
+| POST | `/api/applications/product-manager` | Submit PM application |
+| POST | `/api/waitlist/join` | Join the waitlist |
+| POST | `/api/send-email` | Send contact form email |
+
+### Protected Admin Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/admin/data` | Fetch all applications and waitlist |
+| GET | `/api/admin/status` | Get application status |
+| POST | `/api/admin/status` | Toggle application status |
+| DELETE | `/api/admin/delete` | Delete individual or all records |
+
+## Admin Dashboard
+
+Access the admin dashboard at `/admin`. Features include:
+
+1. **Application Status Toggles**: Open/close applications for SD and PM roles
+2. **Waitlist Tab**: View all waitlist members with delete options
+3. **Software Developers Tab**: View full SD applications with:
+   - Contact info and resume links
+   - Essay responses
+   - Previous application indicator
+   - Individual delete option
+4. **Product Managers Tab**: View full PM applications with similar features
+5. **Bulk Delete**: Delete all records in any category
+
+## Environment Variables
+
+| Variable | Description |
+|----------|-------------|
+| `DATABASE_URL` | PostgreSQL connection string |
+| `ADMIN_PASSWORD` | Password for admin dashboard access |
+| `NEXTAUTH_SECRET` | Secret for NextAuth session encryption |
+| `RESEND_API_KEY` | API key for Resend email service |
+| `PERSONAL_EMAIL` | Email address to receive contact form submissions |
+
+## Styling
+
+The website uses BUILD UMass brand guidelines:
+- **Primary Font**: Montserrat
+- **Secondary Font**: Source Sans Pro
+- **Primary Color**: BUILD Red (`#dc2626`)
+- **Design**: Clean, modern interface with Tailwind CSS
+
+## Deployment (Vercel)
+
+1. Connect your repository to Vercel
+2. Set environment variables in Vercel project settings:
+   - `DATABASE_URL`
+   - `ADMIN_PASSWORD`
+   - `NEXTAUTH_SECRET`
+   - `RESEND_API_KEY`
+   - `PERSONAL_EMAIL`
+3. Deploy - Vercel will automatically build and deploy
+
+For manual deployment:
 ```bash
-uvicorn app.main:app --reload                    # Start API server
-rq worker default --url $REDIS_URL              # Start background worker
-alembic upgrade head                             # Run database migrations
-alembic revision --autogenerate -m "message"    # Create new migration
-pytest                                           # Run tests
+npm run build
+npm run start
 ```
-
-### Frontend
-
-```bash
-npm run dev          # Start development server
-npm run build        # Build for production
-npm run lint         # Run ESLint
-npm run format       # Format with Prettier
-```
-
-## Environment Configuration
-
-### Local Development
-
-Use the provided `.env.example` files. The default configuration uses:
-- Local PostgreSQL via Docker
-- Local Redis via Docker
-- Frontend connects to local backend
-
-### Supabase Integration
-
-To use hosted Supabase instead of local PostgreSQL:
-
-1. Update `backend/.env`:
-   ```
-   DATABASE_URL=postgresql+asyncpg://postgres:[password]@[host]:5432/postgres
-   ```
-
-2. Update `frontend/.env.local`:
-   ```
-   NEXT_PUBLIC_SUPABASE_URL=https://[project].supabase.co
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=[anon_key]
-   ```
-
-## API Endpoints
-
-- `GET /health` - Health check endpoint
-- `GET /docs` - Interactive API documentation (Swagger UI)
-
-## Health Checks
-
-- Backend: `http://localhost:8000/health`
-- Frontend proxy: `http://localhost:3000/api/health`
-
-## Database Migrations
-
-```bash
-cd backend
-
-# Create a new migration
-alembic revision --autogenerate -m "description"
-
-# Apply migrations
-alembic upgrade head
-
-# Rollback migration
-alembic downgrade -1
-```
-
-## Testing
-
-```bash
-# Backend tests
-cd backend
-pytest
-
-# Frontend tests (when configured)
-npm run test -w frontend
-```
-
-## Docker Development
-
-```bash
-# Start all services
-docker compose up -d
-
-# View logs
-docker compose logs -f
-
-# Stop services
-docker compose down
-```
-
-## Project Structure
-
-```
-build-finder/
-├── frontend/                 # Next.js application
-│   ├── src/
-│   │   ├── app/             # App Router pages
-│   │   ├── components/      # React components
-│   │   └── lib/             # Utilities and configurations
-├── backend/                  # FastAPI application
-│   ├── app/
-│   │   ├── db/              # Database models and schemas
-│   │   ├── routers/         # API routes
-│   │   ├── services/        # Business logic
-│   │   ├── workers/         # Background jobs
-│   │   └── security/        # Authentication
-│   └── tests/               # Test files
-├── docker-compose.yml       # Docker services
-└── package.json            # Workspace configuration
-```
-
-## Technologies
-
-### Frontend
-- Next.js 15 (App Router)
-- TypeScript
-- Tailwind CSS
-- TanStack Query
-- Zustand
-- Zod
-- Axios
-- Supabase Client
-
-### Backend
-- FastAPI
-- SQLAlchemy 2.x
-- Alembic
-- Redis + RQ
-- Pydantic
-- HTTPX
-- Beautiful Soup 4
-- Tenacity
-
-### DevOps
-- Docker & Docker Compose
-- ESLint & Prettier
-- Ruff & Black
-- MyPy
-- Pytest

@@ -1,9 +1,46 @@
-node_modules
+# Dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+
+# Build output
+build/
+dist/
+
+# Environment files
 .env
 .env.local
-dist
-__pycache__/
-*.pyc
-.mypy_cache/
-.pytest_cache/
-.alembic/
+.env.*.local
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# IDE/Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Database
+database/dev.db
+database/dev.db-journal
+*.db
+*.db-journal
+
+# Vercel
+.vercel/
+
+# Testing
+coverage/
