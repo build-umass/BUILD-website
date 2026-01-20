@@ -141,10 +141,10 @@ export default function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
               </svg>
             </div>
             <h3 className="text-xl font-bold font-montserrat text-gray-800 mb-2">
-              You're on the list!
+              You&apos;re on the list!
             </h3>
             <p className="text-gray-600 font-source-sans">
-              We'll notify you when applications reopen.
+              We&apos;ll notify you when applications reopen.
             </p>
           </div>
         )}

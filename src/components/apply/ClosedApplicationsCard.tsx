@@ -19,7 +19,7 @@ export default function ClosedApplicationsCard({
         <p className="text-gray-600 font-source-sans mb-6 leading-relaxed">
           Thank you for your interest in BUILD UMass! We are not currently
           accepting new applications, but we encourage you to join our waitlist.
-          We'll notify you as soon as applications reopen for the next
+          We&apos;ll notify you as soon as applications reopen for the next
           recruitment cycle.
         </p>
 

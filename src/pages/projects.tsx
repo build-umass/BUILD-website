@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import JumbotronHeader from '../components/JumbotronHeader';
 import ProjectCard from '../components/ProjectCard';
 import { categories, projects } from '@/content/projects';
@@ -125,18 +126,18 @@ export default function Projects() {
             solutions.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
+            <Link
               href="/contact"
               className="bg-white text-red-600 font-montserrat font-bold py-3 px-8 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 transition-colors"
             >
               Start a Project
-            </a>
-            <a
+            </Link>
+            <Link
               href="/apply"
               className="border-2 border-white text-white font-montserrat font-bold py-3 px-8 rounded-md hover:bg-white hover:text-red-600 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 transition-colors"
             >
               Join Our Team
-            </a>
+            </Link>
           </div>
         </div>
       </section>

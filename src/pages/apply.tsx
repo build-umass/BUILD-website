@@ -126,7 +126,7 @@ export default function Apply() {
               What We Look For
             </h2>
             <p className="text-xl text-gray-600 font-source-sans max-w-3xl mx-auto">
-              We're looking for passionate students who want to grow as
+              We&apos;re looking for passionate students who want to grow as
               developers and make an impact
             </p>
           </div>
@@ -248,7 +248,7 @@ export default function Apply() {
               Frequently Asked Questions
             </h2>
             <p className="text-xl text-gray-600 font-source-sans max-w-3xl mx-auto">
-              Have questions? We've got answers. If you don't see your question
+              Have questions? We&apos;ve got answers. If you don&apos;t see your question
               here, feel free to reach out!
             </p>
           </div>

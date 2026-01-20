@@ -1,26 +1,26 @@
-import React, { useState } from 'react';
-import Image from 'next/image';
-import JumbotronHeader from '../components/JumbotronHeader';
+import React, { useState } from "react";
+import Image from "next/image";
+import JumbotronHeader from "../components/JumbotronHeader";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    organization: '',
-    subject: '',
-    message: '',
+    name: "",
+    email: "",
+    organization: "",
+    subject: "",
+    message: "",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<
-    'idle' | 'success' | 'error'
-  >('idle');
-  const [errorMessage, setErrorMessage] = useState('');
+    "idle" | "success" | "error"
+  >("idle");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleInputChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    >,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -38,33 +38,35 @@ export default function Contact() {
     e.preventDefault();
 
     if (!isValidEmail(formData.email)) {
-      setSubmitStatus('error');
-      setErrorMessage('Please enter a valid email address.');
+      setSubmitStatus("error");
+      setErrorMessage("Please enter a valid email address.");
       return;
     }
-  
+
     if (formData.name.trim().length < 2) {
-      setSubmitStatus('error');
-      setErrorMessage('Please enter your full name.');
+      setSubmitStatus("error");
+      setErrorMessage("Please enter your full name.");
       return;
     }
-    
+
     if (formData.message.trim().length < 10) {
-      setSubmitStatus('error');
-      setErrorMessage('Please provide a more detailed message (at least 10 characters).');
+      setSubmitStatus("error");
+      setErrorMessage(
+        "Please provide a more detailed message (at least 10 characters).",
+      );
       return;
     }
 
     setIsSubmitting(true);
-    setSubmitStatus('idle');
-    setErrorMessage('');
+    setSubmitStatus("idle");
+    setErrorMessage("");
 
     try {
       // Send data to Next.js API route
-      const response = await fetch('/api/send-email', {
-        method: 'POST',
+      const response = await fetch("/api/send-email", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
@@ -72,46 +74,48 @@ export default function Contact() {
       const data = await response.json();
 
       if (response.ok) {
-        setSubmitStatus('success');
+        setSubmitStatus("success");
         // Reset form on success
         setFormData({
-          name: '',
-          email: '',
-          organization: '',
-          subject: '',
-          message: '',
+          name: "",
+          email: "",
+          organization: "",
+          subject: "",
+          message: "",
         });
 
         // Auto-hide success message after 5 seconds
         setTimeout(() => {
-          setSubmitStatus('idle');
+          setSubmitStatus("idle");
         }, 5000);
       } else {
-        setSubmitStatus('error');
+        setSubmitStatus("error");
         setErrorMessage(
-          data.detail || 'Failed to send message. Please try again.'
+          data.detail || "Failed to send message. Please try again.",
         );
-        
+
         // Handle Pydantic validation errors (they come as an array)
-      if (data.detail && Array.isArray(data.detail)) {
-        // Extract error messages from Pydantic validation errors
-        const errorMessages = data.detail
-          .map((err: any) => err.msg || 'Validation error')
-          .join('. ');
-        setErrorMessage(errorMessages);
-      } else if (typeof data.detail === 'string') {
-        // Simple string error from your backend
-        setErrorMessage(data.detail);
-      } else {
-        // Fallback error message
-        setErrorMessage('Failed to send message. Please check your input and try again.');
-      }
+        if (data.detail && Array.isArray(data.detail)) {
+          // Extract error messages from Pydantic validation errors
+          const errorMessages = data.detail
+            .map((err: any) => err.msg || "Validation error")
+            .join(". ");
+          setErrorMessage(errorMessages);
+        } else if (typeof data.detail === "string") {
+          // Simple string error from your backend
+          setErrorMessage(data.detail);
+        } else {
+          // Fallback error message
+          setErrorMessage(
+            "Failed to send message. Please check your input and try again.",
+          );
+        }
       }
     } catch (error) {
-      console.error('Error submitting form:', error);
-      setSubmitStatus('error');
+      console.error("Error submitting form:", error);
+      setSubmitStatus("error");
       setErrorMessage(
-        'Network error. Please check your connection and try again.'
+        "Network error. Please check your connection and try again.",
       );
     } finally {
       setIsSubmitting(false);
@@ -148,19 +152,22 @@ export default function Contact() {
                 Send us a Message
               </h2>
               <p className="text-lg text-gray-600 font-source-sans mb-8">
-                Fill out the form below and we'll get back to you as soon as
-                possible. We're excited to hear about your project ideas!
+                Fill out the form below and we&apos;ll get back to you as soon
+                as possible. We&apos;re excited to hear about your project
+                ideas!
               </p>
 
-              {submitStatus === 'success' && (
+              {submitStatus === "success" && (
                 <div className="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
-                  ✓ Thank you for your message! We'll get back to you soon.
+                  ✓ Thank you for your message! We&apos;ll get back to you soon.
                 </div>
               )}
 
-              {submitStatus === 'error' && (
+              {submitStatus === "error" && (
                 <div className="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
-                  ✗ {errorMessage || 'Sorry, there was an error sending your message. Please try again.'}
+                  ✗{" "}
+                  {errorMessage ||
+                    "Sorry, there was an error sending your message. Please try again."}
                 </div>
               )}
 
@@ -300,7 +307,7 @@ export default function Contact() {
                       Sending...
                     </>
                   ) : (
-                    'Send Message'
+                    "Send Message"
                   )}
                 </button>
               </form>
@@ -312,8 +319,9 @@ export default function Contact() {
                 Get in Touch
               </h2>
               <p className="text-lg text-gray-600 font-source-sans mb-8">
-                We're here to help bring your ideas to life. Reach out through
-                the form or connect with us directly through the channels below.
+                We&apos;re here to help bring your ideas to life. Reach out
+                through the form or connect with us directly through the
+                channels below.
               </p>
 
               <div className="space-y-6">
@@ -341,7 +349,7 @@ export default function Contact() {
                       href="mailto:jonliu@umass.edu"
                       className="text-red-600 font-source-sans hover:text-red-700"
                     >
-                      contact@buildumass.com
+                      build.umass@gmail.com
                     </a>
                   </div>
                 </div>
@@ -488,10 +496,12 @@ export default function Contact() {
 
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <h3 className="text-lg font-bold font-montserrat text-gray-800 mb-3">
-                What's the cost for a project?
+                What&apos;s the cost for a project?
               </h3>
               <p className="text-gray-600 font-source-sans">
-                We do not charge for building projects at this time. We provide pro-bono software development and consulting for interested clients.
+                We do not charge for building projects at this time. We provide
+                pro-bono software development and consulting for interested
+                clients.
               </p>
             </div>
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import JumbotronHeader from '../components/JumbotronHeader';
 
 export default function Services() {
@@ -307,22 +308,22 @@ export default function Services() {
             Ready to Start Your Project?
           </h2>
           <p className="text-xl text-white font-source-sans mb-8 max-w-3xl mx-auto">
-            Let's discuss how we can help bring your ideas to life with our
+            Let&apos;s discuss how we can help bring your ideas to life with our
             comprehensive software development services.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
+            <Link
               href="/contact"
               className="bg-white text-red-600 font-montserrat font-bold py-3 px-8 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 transition-colors"
             >
               Get Started
-            </a>
-            <a
+            </Link>
+            <Link
               href="/projects"
               className="border-2 border-white text-white font-montserrat font-bold py-3 px-8 rounded-md hover:bg-white hover:text-red-600 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 transition-colors"
             >
               View Our Work
-            </a>
+            </Link>
           </div>
         </div>
       </section>

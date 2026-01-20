@@ -379,7 +379,7 @@ export default function SoftwareDeveloperApplication() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Describe a project you've worked on (Max 500 words) *
+                  Describe a project you&apos;ve worked on (Max 500 words) *
                 </label>
                 <textarea
                   name="projectExperience"
