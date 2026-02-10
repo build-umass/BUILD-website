@@ -1,6 +1,6 @@
 # BUILD UMass Website
 
-The official website for BUILD UMass - UMass's biggest pro-bono software club that builds products for nonprofits and businesses.
+The official website for BUILD UMass - UMass's biggest pro-bono software development club that builds products for nonprofits and businesses.
 
 ## Features
 
