@@ -222,6 +222,33 @@ export default function AdminDashboard() {
     }
   };
 
+  const exportToCSV = (rows: Record<string, unknown>[], filename: string) => {
+    if (rows.length === 0) return;
+    const headers = Object.keys(rows[0]);
+    const csvContent = [
+      headers.join(','),
+      ...rows.map((row) =>
+        headers
+          .map((h) => {
+            const val = String(row[h] ?? '');
+            if (val.includes(',') || val.includes('"') || val.includes('\n')) {
+              return `"${val.replace(/"/g, '""')}"`;
+            }
+            return val;
+          })
+          .join(',')
+      ),
+    ].join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   const getTypeDisplayName = (type: string | null) => {
     switch (type) {
       case 'waitlist':
@@ -409,30 +436,26 @@ export default function AdminDashboard() {
               >
                 Waitlist ({data?.waitlist.length || 0})
               </button>
-              {(sdApplicationStatus || pmApplicationStatus) && (
-                <>
-                  <button
-                    onClick={() => setActiveTab('sd')}
-                    className={`pb-4 px-2 font-semibold transition-colors ${
-                      activeTab === 'sd'
-                        ? 'text-build-red-600 border-b-4 border-build-red-600'
-                        : 'text-gray-500 hover:text-gray-700'
-                    }`}
-                  >
-                    Software Developers ({data?.softwareDevelopers.length || 0})
-                  </button>
-                  <button
-                    onClick={() => setActiveTab('pm')}
-                    className={`pb-4 px-2 font-semibold transition-colors ${
-                      activeTab === 'pm'
-                        ? 'text-build-red-600 border-b-4 border-build-red-600'
-                        : 'text-gray-500 hover:text-gray-700'
-                    }`}
-                  >
-                    Product Managers ({data?.productManagers.length || 0})
-                  </button>
-                </>
-              )}
+              <button
+                onClick={() => setActiveTab('sd')}
+                className={`pb-4 px-2 font-semibold transition-colors ${
+                  activeTab === 'sd'
+                    ? 'text-build-red-600 border-b-4 border-build-red-600'
+                    : 'text-gray-500 hover:text-gray-700'
+                }`}
+              >
+                Software Developers ({data?.softwareDevelopers.length || 0})
+              </button>
+              <button
+                onClick={() => setActiveTab('pm')}
+                className={`pb-4 px-2 font-semibold transition-colors ${
+                  activeTab === 'pm'
+                    ? 'text-build-red-600 border-b-4 border-build-red-600'
+                    : 'text-gray-500 hover:text-gray-700'
+                }`}
+              >
+                Product Managers ({data?.productManagers.length || 0})
+              </button>
             </div>
           </div>
 
@@ -487,8 +510,24 @@ export default function AdminDashboard() {
             )}
 
             {/* Software Developers Tab */}
-            {activeTab === 'sd' && sdApplicationStatus && (
+            {activeTab === 'sd' && (
               <div className="p-6 space-y-6">
+                {data?.softwareDevelopers && data.softwareDevelopers.length > 0 && (
+                  <div className="flex space-x-4">
+                    <button
+                      onClick={() => exportToCSV(data.softwareDevelopers as unknown as Record<string, unknown>[], 'software-developers.csv')}
+                      className="px-4 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+                    >
+                      Export CSV
+                    </button>
+                    <button
+                      onClick={() => openDeleteModal('software_developer', null, '', true)}
+                      className="px-4 py-2 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition-colors"
+                    >
+                      Delete All
+                    </button>
+                  </div>
+                )}
                 {data?.softwareDevelopers.map((dev) => (
                   <div key={dev.id} className="border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow relative">
                     {/* Delete Button */}
@@ -576,22 +615,28 @@ export default function AdminDashboard() {
                     </div>
                   </div>
                 ))}
-                {data?.softwareDevelopers && data.softwareDevelopers.length > 0 && (
-                  <div className="pt-6 border-t border-gray-200">
-                    <button
-                      onClick={() => openDeleteModal('software_developer', null, '', true)}
-                      className="w-full py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition-colors"
-                    >
-                      Delete All Software Developer Applications
-                    </button>
-                  </div>
-                )}
               </div>
             )}
 
             {/* Product Managers Tab */}
-            {activeTab === 'pm' && pmApplicationStatus && (
+            {activeTab === 'pm' && (
               <div className="p-6 space-y-6">
+                {data?.productManagers && data.productManagers.length > 0 && (
+                  <div className="flex space-x-4">
+                    <button
+                      onClick={() => exportToCSV(data.productManagers as unknown as Record<string, unknown>[], 'product-managers.csv')}
+                      className="px-4 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+                    >
+                      Export CSV
+                    </button>
+                    <button
+                      onClick={() => openDeleteModal('product_manager', null, '', true)}
+                      className="px-4 py-2 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition-colors"
+                    >
+                      Delete All
+                    </button>
+                  </div>
+                )}
                 {data?.productManagers.map((pm) => (
                   <div key={pm.id} className="border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow relative">
                     {/* Delete Button */}
@@ -671,16 +716,6 @@ export default function AdminDashboard() {
                     </div>
                   </div>
                 ))}
-                {data?.productManagers && data.productManagers.length > 0 && (
-                  <div className="pt-6 border-t border-gray-200">
-                    <button
-                      onClick={() => openDeleteModal('product_manager', null, '', true)}
-                      className="w-full py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition-colors"
-                    >
-                      Delete All Product Manager Applications
-                    </button>
-                  </div>
-                )}
               </div>
             )}
           </div>
