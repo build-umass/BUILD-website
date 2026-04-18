@@ -18,6 +18,122 @@ export interface ProjectData {
 
 export const projects: ProjectData[] = [
   {
+    id: 24,
+    title: 'Si-Social',
+    year: 2025,
+    description:
+      'We created an educational social-media app where people can share their knowledge under categories like Education, Science, etc. and every user is safe.',
+    image_url: '/images/projects/sisocial.png',
+    project_lead: [{ name: 'Arushi Agrawal' }],
+    sdes: [
+      { name: 'Sudhip Nashi' },
+      { name: 'Aman Chhetri' },
+      { name: 'Arna Bhattacharya' },
+      { name: 'Iris Chen' },
+      { name: 'Jennifer Ye' },
+      { name: 'Aastha Agrawal'},
+      { name: 'Hanabel Mengistu'}
+    ],
+    product_managers: [{ name: 'Khushii Shetty'}, {name: 'Aditi Khodke' }],
+    category: 'Web Development',
+  },
+  {
+    id: 23,
+    title: 'Trimline',
+    year: 2026,
+    description:
+      'Whisk Labs is a platform that helps restaurants and catering teams reduce food waste by allowing them to log waste data through spoken inputs, combining that information with point of sale, inventory, behavioral, and seasonal data, and then feeding that into machine learning models to improve preparation, pricing, and menu decisions. The overall goal is to help these small businesses save money and increase efficiency.',
+    image_url: '/images/projects/trimline.png',
+    project_lead: [{ name: 'Jonathan Liu' }],
+    sdes: [
+      { name: 'Aidan Jiang' },
+      { name: 'Ansh Kanyadi' },
+      { name: 'Ayman Blanco' },
+      { name: 'Bhanu Sohan Pingali' },
+      { name: 'Jack Forman' },
+      { name: 'John Ngo'},
+      { name: 'Tony Nguyen'}
+    ],
+    product_managers: [{ name: 'Supriyaa Hejib' }],
+    category: 'Web Development',
+  },
+  {
+    id: 22,
+    title: 'Global Veterinary Fund',
+    year: 2026,
+    description:
+      'Global Veterinary Fund (GVF) focuses on providing financial support to veterinary students, animal/environment-focused organizations, and individuals facing veterinary care debt, while engaging with the community through meaningful, student-led projects and events.',
+    image_url: '/images/projects/gvf.png',
+    project_lead: [{ name: 'Michael Doyle' }],
+    sdes: [
+      { name: 'Aurum Mandal' },
+      { name: 'Dia Sutaria' },
+      { name: 'Dillon Sheils' },
+      { name: 'Rayyan' },
+      { name: 'Tim Guilmette' }
+    ],
+    product_managers: [{ name: 'Adhya Putta' }, {name: 'Iris Cabral'}],
+    project_url: 'https://github.com/micdoyle/global-veterinary-fund',
+    category: 'Web Development',
+  },
+  {
+    id: 21,
+    title: 'Amherst Community Platform',
+    year: 2026,
+    description:
+      'We are working to build a centralized, intuitive mobile platform that connects UMass students, Amherst residents, and local businesses by consolidating fragmented community information into one place. Our goal for the semester is to implement essential functional features for the MVP in order to start beta testing and gain feedback from the community.',
+    image_url: '/images/projects/amherstconnect.png',
+    project_lead: [{ name: 'Brian Nguyen' }],
+    sdes: [
+      { name: 'Sonny Zhang' },
+      { name: 'Camila Rivera de Jesus' },
+      { name: 'Anish Kamath' },
+      { name: 'Kushagra Aitha' },
+      { name: 'Damian Phimister' },
+      { name: 'Pranav Ravi Buregoni'},
+      { name: 'Maya Nedkova' }
+    ],
+    product_managers: [{ name: 'Shriya Sanas' }, {name: 'Adya Joshi'}],
+    category: 'Web Development',
+  },
+  {
+    id: 20,
+    title: 'BUILD Automation Tools',
+    year: 2025,
+    description:
+      'We are building several AI automation agents to streamline aspects of BUILD including website building, client outreach, deployment, and more. Our goal for this semester is to create a website-building agent.',
+    image_url: '/images/projects/buildlogo.jpeg',
+    project_lead: [{ name: 'Nathan' }, { name: 'Kiran BK'}],
+    sdes: [
+      { name: 'Bruce Do' },
+      { name: 'Ariana Thomas' },
+      { name: 'Anthony Chiu' },
+      { name: 'Andrew' },
+      { name: 'Ngoc Duc Nghiem' }
+    ],
+    product_managers: [{ name: 'Avin Vipanurat' }],
+    project_url: 'https://github.com/build-umass/amherstconnect',
+    category: 'Web Development',
+  },
+  {
+    id: 19,
+    title: 'Human Service Forum',
+    year: 2025,
+    description:
+      'An innovative platform that streamlines the process of skills-based volunteering, developed for the Human Service Forum. We are developing a dynamic web platform that converts the technical needs of non-profit organizations into structured, project-ready listings for volunteer software developers. We use tailored matching algorithms and centralized dashboards to pair organizations with the exact technical talent they need. We are also focused on designing an intuitive UI and improving overall usability and quality-of-life features to ensure a seamless onboarding process for both non-profits and developers.',
+    image_url: '/images/projects/humanserviceforum.png',
+    project_lead: [{ name: 'Jash Kotadiya' }, { name: 'Rudra Patel'}],
+    sdes: [
+      { name: 'Aarohi Agrawal' },
+      { name: 'Aurum Mandal' },
+      { name: 'Faith Deffor' },
+      { name: 'Marckheil' },
+      { name: 'Shivansh Soni' }
+    ],
+    product_managers: [{ name: 'Maryam Ahsan Syeda' }],
+    category: 'Web Development',
+  },
+  {
     id: 18,
     title: 'UMass Photo',
     year: 2025,
@@ -41,7 +157,7 @@ export const projects: ProjectData[] = [
     title: 'STEMPlore',
     year: 2025,
     description:
-      'STEMPlore is an innovative platform that gamifies the process of learning STEM topics. We are developing an AI-powered tool that converts uploaded educational curricula from slide-based formats into structured, question-ready content for the platform. We use LLMs to parse the curriculum and generate high-quality, usable questions. We are also working on modernizing the website’s UI and improving overall usability and quality-of-life features. STEMplore is an innovative educational tool developed by STEM For Others, designed to revolutionize STEM education. STEMplore offers a gamified learning experience that combines interactive lessons and engaging challenges. Our platform covers a wide range of science, technology, engineering, and mathematics (STEM) subjects, making learning fun and engaging for students of all ages. STEMPLORE helps students build critical thinking skills and a deep understanding of STEM concepts through an immersive and enjoyable approach. Join STEMPLORE today and discover how STEM For Others is transforming education one game at a time.',
+      'STEMPlore is an innovative platform that gamifies the process of learning STEM topics, developed by STEM For Others, designed to revolutionize STEM education. The organization approached us to develop an AI-powered tool that converts uploaded educational curricula from slide-based formats into structured, question-ready content for the platform. To implement this, we are utilizing LLMs to parse the curriculum and generate high-quality, usable questions. We are also working on modernizing the website’s UI and improving overall usability and quality-of-life features.',
     image_url: '/images/projects/stemplore_S25.png',
     project_lead: [{ name: 'Shreyas Pedda' }],
     sdes: [
@@ -49,6 +165,7 @@ export const projects: ProjectData[] = [
       { name: 'Jennifer Ye' },
       { name: 'Armaan Nahata' },
       { name: 'Krish Arekar' },
+      { name: 'Charlie Desmond'}
     ],
     product_managers: [{ name: 'Urvi Gupta' }, { name: 'Duretti Hordofaa' }],
     project_url: 'https://www.stemplore.com/',
