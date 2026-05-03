@@ -22,7 +22,7 @@ export const projects: ProjectData[] = [
     title: 'Si-Social',
     year: 2025,
     description:
-      'We created an educational social-media app where people can share their knowledge under categories like Education, Science, etc. and every user is safe.',
+      'We created an educational social-media app where people can share their knowledge under categories like Education, Science, etc, and every user is safe.',
     image_url: '/images/projects/sisocial.png',
     project_lead: [{ name: 'Arushi Agrawal' }],
     sdes: [
