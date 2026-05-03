@@ -1,9 +1,9 @@
-import React from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import JumbotronHeader from '../components/JumbotronHeader';
-import CompanyLogos from '../components/CompanyLogos';
-import JoinUsHero from '../components/JoinUsHero';
+import React from "react";
+import Link from "next/link";
+import Image from "next/image";
+import JumbotronHeader from "../components/JumbotronHeader";
+import CompanyLogos from "../components/CompanyLogos";
+import JoinUsHero from "../components/JoinUsHero";
 
 export default function Home() {
   return (
@@ -172,7 +172,7 @@ export default function Home() {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold font-montserrat text-gray-800 mb-4">
               Our members are brilliant students and professionals who end up
-              working for the best companies in the industry.{' '}
+              working for the best companies in the industry.{" "}
             </h2>
             <p className="text-lg text-gray-600 font-source-sans"></p>
           </div>
@@ -186,7 +186,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
             <div>
               <div className="text-4xl font-bold font-montserrat text-red-600 mb-2">
-                70+
+                60+
               </div>
               <div className="text-gray-600 font-source-sans">Members</div>
             </div>
@@ -198,7 +198,7 @@ export default function Home() {
             </div>
             <div>
               <div className="text-4xl font-bold font-montserrat text-red-600 mb-2">
-                30+
+                50+
               </div>
               <div className="text-gray-600 font-source-sans">
                 Projects Completed
@@ -206,11 +206,9 @@ export default function Home() {
             </div>
             <div>
               <div className="text-4xl font-bold font-montserrat text-red-600 mb-2">
-                25+
+                200+
               </div>
-              <div className="text-gray-600 font-source-sans">
-                Client Organizations
-              </div>
+              <div className="text-gray-600 font-source-sans">Alumni</div>
             </div>
           </div>
         </div>
